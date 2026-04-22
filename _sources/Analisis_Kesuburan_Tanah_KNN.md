@@ -99,7 +99,7 @@ Node kedua adalah **Missing Value**, yang berfungsi untuk menangani nilai-nilai 
 
 ### Screenshot KNIME – Node Missing Value
 
-![Node Missing Value](screenshot_02_missing_value.png)
+![Node Missing Value](_sources/02_missing_value.png)
 
 *Gambar 2: Tampilan konfigurasi Node Missing Value – menunjukkan pengaturan imputasi berdasarkan tipe data (Number Integer: Mean, Number Float: Do nothing, String: Most Frequent Value)*
 
@@ -163,7 +163,7 @@ Node ketiga adalah **Category to Number**. Node ini digunakan untuk mengkonversi
 
 ### Screenshot KNIME – Node Category to Number
 
-![Node Category to Number](screenshot_03_category_to_number.png)
+![Node Category to Number](_sources/03_category_to_number.png)
 
 *Gambar 3: Tampilan konfigurasi Node Category to Number – kolom "Tekstur Tanah" dipindahkan ke panel Includes untuk dikonversi, sedangkan kolom "Label" tetap di Excludes*
 
@@ -216,7 +216,7 @@ Node keempat adalah **Normalizer**. Node ini digunakan untuk menormalisasi nilai
 
 ### Screenshot KNIME – Node Normalizer
 
-![Node Normalizer](screenshot_04_normalizer.png)
+![Node Normalizer](_sources/04_normalizer.png)
 
 *Gambar 4: Tampilan konfigurasi Node Normalizer – metode Min-Max dipilih dengan rentang nilai Minimum=0 dan Maximum=1, menampilkan tabel hasil normalisasi di bagian bawah*
 
@@ -275,7 +275,7 @@ Node kelima adalah **Table Partitioner**. Node ini berfungsi untuk membagi datas
 
 ### Screenshot KNIME – Node Table Partitioner
 
-![Node Table Partitioner](screenshot_05_table_partitioner.png)
+![Node Table Partitioner](_sources/05_table_partitioner.png)
 
 *Gambar 5: Tampilan konfigurasi Node Table Partitioner – menggunakan Relative size 80%, strategi Stratified sampling berdasarkan kolom "Tekstur Tanah", dengan Fixed random seed 1678807467440*
 
@@ -328,7 +328,7 @@ Node keenam adalah **K Nearest Neighbor (KNN)**. Node ini merupakan inti dari pr
 
 ### Screenshot KNIME – Node K Nearest Neighbor
 
-![Node K Nearest Neighbor](screenshot_06_knn.png)
+![Node K Nearest Neighbor](_sources/06_knn.png)
 
 *Gambar 6: Tampilan Node K Nearest Neighbor – menampilkan 400 baris hasil klasifikasi (Classified Data) dengan 14 kolom, termasuk kolom prediksi Class [kNN] yang ditambahkan oleh node ini*
 
@@ -388,7 +388,7 @@ Node ketujuh dan terakhir adalah **Scorer**. Node ini digunakan untuk mengevalua
 
 ### Screenshot KNIME – Node Scorer
 
-![Node Scorer](screenshot_07_scorer.png)
+![Node Scorer](_sources/07_scorer.png)
 
 *Gambar 7: Tampilan Node Scorer – menampilkan konfigurasi perbandingan kolom "Class [kNN]" vs "Label" serta hasil Confusion Matrix dengan nilai TN=138, TP=109, FP=0, FN=0*
 
