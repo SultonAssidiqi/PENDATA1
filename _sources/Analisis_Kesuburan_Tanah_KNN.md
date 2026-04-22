@@ -43,7 +43,7 @@ Node pertama dalam alur kerja ini adalah **Excel Reader**. Node ini berfungsi un
 
 ### Screenshot KNIME – Node Excel Reader
 
-![Node Excel Reader](images/screenshot_01_excel_reader.png)
+![Node Excel Reader](_sources/01_excel_reader.png)
 
 *Gambar 1: Tampilan Node Excel Reader pada KNIME – menampilkan alur workflow lengkap dan pratinjau data hasil pembacaan file dataset_kesuburan_tanah_missing.xlsx*
 
