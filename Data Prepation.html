@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Welcome to my Jupyter Book &#8212; My PENDAT BOOK</title>
+    <title>DATA PREPARATION &#8212; My PENDAT BOOK</title>
   
   
   
@@ -60,12 +60,11 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'intro';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Data Prepation';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Data Understanding" href="Data-Understanding.html" />
+    <link rel="next" title="Laporan Analisis Kesuburan Tanah Menggunakan Metode K-Nearest Neighbor (KNN) di KNIME Analytics Platform" href="Analisis_Kesuburan_Tanah_KNN.html" />
+    <link rel="prev" title="Business Understanding" href="Bussines%20Understanding.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -117,8 +116,6 @@
       
       
       
-        
-      
       <dialog id="pst-primary-sidebar-modal"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
@@ -138,7 +135,7 @@
     
   
 
-<a class="navbar-brand logo" href="#">
+<a class="navbar-brand logo" href="intro.html">
   
   
   
@@ -165,19 +162,19 @@
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1 current active">
-                <a class="reference internal" href="#">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
                     Welcome to my Jupyter Book
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Data-Understanding.html">Data Understanding</a></li>
 
 
 
 <li class="toctree-l1"><a class="reference internal" href="Bussines%20Understanding.html">Business Understanding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Data%20Prepation.html">DATA PREPARATION</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">DATA PREPARATION</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Analisis_Kesuburan_Tanah_KNN.html">Laporan Analisis Kesuburan Tanah Menggunakan Metode K-Nearest Neighbor (KNN) di KNIME Analytics Platform</a></li>
 </ul>
 
@@ -255,7 +252,7 @@
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fintro.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FData Prepation.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -285,7 +282,7 @@
       
       
       
-      <li><a href="_sources/intro.md" target="_blank"
+      <li><a href="_sources/Data Prepation.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -348,7 +345,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -359,11 +358,26 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Welcome to my Jupyter Book</h1>
+    <h1>DATA PREPARATION</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memilih-data">1. Memilih Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membersihkan-data">2. Membersihkan Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-missing-value">- Cek Missing Value</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-data-duplikat">- Cek Data Duplikat</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">- Kesimpulan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integrasi-data">3. Integrasi Data</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -373,21 +387,119 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="welcome-to-my-jupyter-book">
-<h1>Welcome to my Jupyter Book<a class="headerlink" href="#welcome-to-my-jupyter-book" title="Link to this heading">#</a></h1>
-<p>MOHAMMAD SULTON MUQSITH ASSIDIQI
-240411100221</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="Data-Understanding.html">Data Understanding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Data-Understanding.html#dataset-yang-digunakan">1. Dataset yang Digunakan</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Data-Understanding.html#perhitungan-wknn-secara-manual">2. Perhitungan WKNN Secara Manual</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Data-Understanding.html#implementasi-menggunakan-python">3. Implementasi Menggunakan Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Bussines%20Understanding.html">Business Understanding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Data%20Prepation.html">DATA PREPARATION</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Analisis_Kesuburan_Tanah_KNN.html">Laporan Analisis Kesuburan Tanah Menggunakan Metode K-Nearest Neighbor (KNN) di KNIME Analytics Platform</a></li>
+  <section class="tex2jax_ignore mathjax_ignore" id="data-preparation">
+<h1>DATA PREPARATION<a class="headerlink" href="#data-preparation" title="Link to this heading">#</a></h1>
+<p>Tahap Data Preparation merupakan salah satu fase penting dalam metodologi CRISP-DM yang dilakukan setelah tahap Data Understanding. Pada fase ini, data yang telah dipelajari karakteristiknya kemudian diproses dan disiapkan agar dapat digunakan pada tahap pemodelan.</p>
+<p>Data yang dikumpulkan dari berbagai sumber umumnya masih bersifat mentah dan belum siap untuk langsung dianalisis. Oleh karena itu, proses Data Preparation bertujuan untuk membersihkan, merapikan, dan meningkatkan kualitas data, sehingga analisis dan pemodelan dapat dilakukan secara optimal serta menghasilkan output yang lebih akurat.</p>
+<section id="memilih-data">
+<h2>1. Memilih Data<a class="headerlink" href="#memilih-data" title="Link to this heading">#</a></h2>
+<p>Pada tahap ini dilakukan proses seleksi data yang akan digunakan dalam analisis dan pembangunan model.</p>
+<p>Dataset yang dipakai adalah <strong>dataset Iris</strong>, yang berisi 150 data dengan 5 atribut, yaitu:</p>
+<ul class="simple">
+<li><p>sepal_length</p></li>
+<li><p>sepal_width</p></li>
+<li><p>petal_length</p></li>
+<li><p>petal_width</p></li>
+<li><p>species</p></li>
 </ul>
+</section>
+<section id="membersihkan-data">
+<h2>2. Membersihkan Data<a class="headerlink" href="#membersihkan-data" title="Link to this heading">#</a></h2>
+<section id="cek-missing-value">
+<h3>- Cek Missing Value<a class="headerlink" href="#cek-missing-value" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p></p></th>
+<th class="head text-left"><p></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>sepal_length</p></td>
+<td class="text-left"><p>0</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>sepal_width</p></td>
+<td class="text-left"><p>0</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>petal_length</p></td>
+<td class="text-left"><p>0</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>petal_width</p></td>
+<td class="text-left"><p>0</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>species</p></td>
+<td class="text-left"><p>0</p></td>
+</tr>
+</tbody>
+</table>
 </div>
+<p>Berdasarkan hasil pemeriksaan pada tahap Data Understanding, seluruh atribut tidak memiliki nilai yang hilang (missing value). Hal ini menunjukkan bahwa dataset sudah lengkap sehingga tidak diperlukan proses penanganan missing value.</p>
+</section>
+<section id="cek-data-duplikat">
+<h3>- Cek Data Duplikat<a class="headerlink" href="#cek-data-duplikat" title="Link to this heading">#</a></h3>
+<p>Berdasarkan hasil pemeriksaan pada tahap Data Understanding, ditemukan 3 data yang terduplikasi dalam dataset. Oleh karena itu, data duplikat tersebut akan dihapus pada proses pembersihan data untuk menjaga kualitas dan keandalan dataset.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">duplikat</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">duplikat</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>sepal_length</p></th>
+<th class="head text-left"><p>sepal_width</p></th>
+<th class="head text-left"><p>petal_length</p></th>
+<th class="head text-left"><p>petal_length</p></th>
+<th class="head text-left"><p>petal_width</p></th>
+<th class="head text-left"><p>species</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>34</p></td>
+<td class="text-left"><p>4.9</p></td>
+<td class="text-left"><p>3.1</p></td>
+<td class="text-left"><p>1.5</p></td>
+<td class="text-left"><p>0.1</p></td>
+<td class="text-left"><p>Iris-setosa</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>37</p></td>
+<td class="text-left"><p>4.9</p></td>
+<td class="text-left"><p>3.1</p></td>
+<td class="text-left"><p>1.5</p></td>
+<td class="text-left"><p>0.1</p></td>
+<td class="text-left"><p>Iris-setosa</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>142</p></td>
+<td class="text-left"><p>5.8</p></td>
+<td class="text-left"><p>2.7</p></td>
+<td class="text-left"><p>5.1</p></td>
+<td class="text-left"><p>0.9</p></td>
+<td class="text-left"><p>Iris-virginica</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Data duplikat ditampilkan menggunakan fungsi duplicated(). Data duplikat terdapat pada baris  34, 37, dan 142.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Keberadaan data duplikat dapat menurunkan tingkat keakuratan analisis karena data yang sama terhitung lebih dari satu kali. Oleh sebab itu, dilakukan proses pembersihan data dengan menghapus duplikasi menggunakan fungsi <code class="docutils literal notranslate"><span class="pre">drop_duplicates()</span></code> pada Python.</p>
+<p>Setelah proses tersebut dilakukan, jumlah data menjadi berkurang dan tidak ditemukan lagi data yang terduplikasi. Dengan demikian, dataset menjadi lebih bersih dan siap digunakan untuk tahap analisis serta pemodelan.</p>
+<p><img alt="original image" src="https://cdn.mathpix.com/snip/images/n9MAjgsSondmmBsZjTsThSPfzJmFd8hVKyvfmxiaNLY.original.fullsize.png" /></p>
+</section>
+<section id="kesimpulan">
+<h3>- Kesimpulan<a class="headerlink" href="#kesimpulan" title="Link to this heading">#</a></h3>
+<p>Berdasarkan proses pembersihan data yang telah dilakukan, diperoleh hasil sebagai berikut:</p>
+<ul class="simple">
+<li><p>Tidak ditemukan nilai yang hilang (missing value)</p></li>
+<li><p>Tidak terdapat data yang terduplikasi</p></li>
+</ul>
+<p>Dengan demikian, dataset telah berada dalam kondisi bersih dan siap digunakan pada tahap berikutnya, yaitu transformasi data dan proses pemodelan.</p>
+</section>
+</section>
+<section id="integrasi-data">
+<h2>3. Integrasi Data<a class="headerlink" href="#integrasi-data" title="Link to this heading">#</a></h2>
+<p>Tahap <strong>data integration</strong> bertujuan untuk menyatukan data dari berbagai sumber ke dalam satu dataset yang konsisten dan terorganisasi.</p>
+<p>Dalam penelitian ini, dataset Iris diperoleh dari satu sumber, dan seluruh atribut yang diperlukan telah tersedia dalam satu file. Atribut tersebut meliputi sepal_length, sepal_width, petal_length, petal_width, dan species.</p>
+<p>Karena data sudah berada dalam satu kesatuan dan tidak ada sumber lain yang perlu digabungkan, maka proses integrasi data tambahan tidak diperlukan.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -420,12 +532,21 @@
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="Bussines%20Understanding.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Business Understanding</p>
+      </div>
+    </a>
     <a class="right-next"
-       href="Data-Understanding.html"
+       href="Analisis_Kesuburan_Tanah_KNN.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Data Understanding</p>
+        <p class="prev-next-title">Laporan Analisis Kesuburan Tanah Menggunakan Metode K-Nearest Neighbor (KNN) di KNIME Analytics Platform</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -435,6 +556,30 @@
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memilih-data">1. Memilih Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membersihkan-data">2. Membersihkan Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-missing-value">- Cek Missing Value</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-data-duplikat">- Cek Data Duplikat</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">- Kesimpulan</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integrasi-data">3. Integrasi Data</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
