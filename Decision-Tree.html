@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Welcome to my Jupyter Book &#8212; My PENDAT BOOK</title>
+    <title>Implementasi Decision Tree Menggunakan KNIME &#8212; My PENDAT BOOK</title>
   
   
   
@@ -60,12 +60,10 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'intro';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Decision-Tree';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Data Understanding" href="Data-Understanding.html" />
+    <link rel="prev" title="Analisis Data Menggunakan Naive Bayes" href="NAIVE%20BAYESS.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -117,8 +115,6 @@
       
       
       
-        
-      
       <dialog id="pst-primary-sidebar-modal"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
@@ -138,7 +134,7 @@
     
   
 
-<a class="navbar-brand logo" href="#">
+<a class="navbar-brand logo" href="intro.html">
   
   
   
@@ -165,13 +161,13 @@
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1 current active">
-                <a class="reference internal" href="#">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
                     Welcome to my Jupyter Book
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Data-Understanding.html">Data Understanding</a></li>
 
 
@@ -180,7 +176,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Data%20Prepation.html">DATA PREPARATION</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Analisis_Kesuburan_Tanah_KNN.html">Laporan Analisis Kesuburan Tanah Menggunakan Metode K-Nearest Neighbor (KNN) di KNIME Analytics Platform</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NAIVE%20BAYESS.html">Analisis Data Menggunakan Naive Bayes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Decision-Tree.html">Implementasi Decision Tree Menggunakan KNIME</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Implementasi Decision Tree Menggunakan KNIME</a></li>
 </ul>
 
     </div>
@@ -257,7 +253,7 @@
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fintro.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FDecision-Tree.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -287,7 +283,7 @@
       
       
       
-      <li><a href="_sources/intro.md" target="_blank"
+      <li><a href="_sources/Decision-Tree.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -350,7 +346,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -361,11 +359,28 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Welcome to my Jupyter Book</h1>
+    <h1>Implementasi Decision Tree Menggunakan KNIME</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deskripsi-node-decision-tree-knime">Deskripsi Node Decision Tree KNIME</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#csv-reader">1. CSV Reader</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#table-partitioner">2. Table Partitioner</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#color-manager">3. Color Manager</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#color-appender">4. Color Appender</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-tree-learner">Decision Tree Learner</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-tree-predictor">Decision Tree Predictor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scorer">Scorer</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -375,23 +390,80 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="welcome-to-my-jupyter-book">
-<h1>Welcome to my Jupyter Book<a class="headerlink" href="#welcome-to-my-jupyter-book" title="Link to this heading">#</a></h1>
-<p>MOHAMMAD SULTON MUQSITH ASSIDIQI
-240411100221</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="Data-Understanding.html">Data Understanding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Data-Understanding.html#dataset-yang-digunakan">1. Dataset yang Digunakan</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Data-Understanding.html#perhitungan-wknn-secara-manual">2. Perhitungan WKNN Secara Manual</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Data-Understanding.html#implementasi-menggunakan-python">3. Implementasi Menggunakan Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Bussines%20Understanding.html">Business Understanding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Data%20Prepation.html">DATA PREPARATION</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Analisis_Kesuburan_Tanah_KNN.html">Laporan Analisis Kesuburan Tanah Menggunakan Metode K-Nearest Neighbor (KNN) di KNIME Analytics Platform</a></li>
-<li class="toctree-l1"><a class="reference internal" href="NAIVE%20BAYESS.html">Analisis Data Menggunakan Naive Bayes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Decision-Tree.html">Implementasi Decision Tree Menggunakan KNIME</a></li>
+  <section class="tex2jax_ignore mathjax_ignore" id="implementasi-decision-tree-menggunakan-knime">
+<h1>Implementasi Decision Tree Menggunakan KNIME<a class="headerlink" href="#implementasi-decision-tree-menggunakan-knime" title="Link to this heading">#</a></h1>
+<section id="deskripsi-node-decision-tree-knime">
+<h2>Deskripsi Node Decision Tree KNIME<a class="headerlink" href="#deskripsi-node-decision-tree-knime" title="Link to this heading">#</a></h2>
+<p><img alt="original image" src="https://cdn.mathpix.com/snip/images/aHfp5luKy0vr4VTUzc509ambsVFYdZof7rIbU2GqL8A.original.fullsize.png" /></p>
+<p>Dataset yang digunakan pada workflow ini adalah dataset Car Evaluation, yaitu dataset yang digunakan untuk melakukan klasifikasi kualitas mobil berdasarkan beberapa atribut seperti harga mobil, biaya perawatan, jumlah pintu, kapasitas penumpang, ukuran bagasi, dan tingkat keamanan mobil.</p>
+<p>Target klasifikasi pada dataset ini adalah menentukan kategori kelayakan mobil, seperti:</p>
+<ul class="simple">
+<li><p>unacc → tidak layak</p></li>
+<li><p>acc → layak</p></li>
+<li><p>good → baik</p></li>
+<li><p>vgood → sangat baik</p></li>
 </ul>
-</div>
+<section id="csv-reader">
+<h3>1. CSV Reader<a class="headerlink" href="#csv-reader" title="Link to this heading">#</a></h3>
+<p>Node CSV Reader digunakan untuk membaca dan mengimpor dataset car_evaluation.csv ke dalam KNIME. Dataset ini berisi data evaluasi mobil berdasarkan beberapa atribut seperti harga pembelian (buying), biaya perawatan (maint), jumlah pintu (doors), kapasitas penumpang (persons), ukuran bagasi (lug_boot), dan tingkat keamanan (safety).</p>
+<p><img alt="original image" src="https://cdn.mathpix.com/snip/images/Y8gsq7eheTYRsU9XFi7VKi9bFt4S2qMyoq1TAipuBWw.original.fullsize.png" /></p>
+<p>Node ini menjadi tahap awal agar data dapat diproses pada tahapan klasifikasi berikutnya.</p>
+</section>
+<section id="table-partitioner">
+<h3>2. Table Partitioner<a class="headerlink" href="#table-partitioner" title="Link to this heading">#</a></h3>
+<p>Node Table Partitioner digunakan untuk membagi dataset menjadi dua bagian, yaitu:</p>
+<ul class="simple">
+<li><p>data latih</p></li>
+<li><p>data uji</p></li>
+</ul>
+<p>Data latih digunakan untuk membentuk pohon keputusan menggunakan algoritma Decision Tree, sedangkan data uji digunakan untuk menguji hasil klasifikasi yang dihasilkan model.</p>
+<p>Pembagian data biasanya dilakukan dengan perbandingan:</p>
+<ul class="simple">
+<li><p>70% data latih</p></li>
+<li><p>30% data uji</p></li>
+</ul>
+<p>Tahap ini penting agar hasil klasifikasi dapat diuji menggunakan data yang berbeda dari data pembentukan model.</p>
+</section>
+<section id="color-manager">
+<h3>3. Color Manager<a class="headerlink" href="#color-manager" title="Link to this heading">#</a></h3>
+<p>Node Color Manager digunakan untuk memberikan warna pada setiap kategori atau kelas data pada dataset Car Evaluation agar proses visualisasi menjadi lebih jelas dan mudah dipahami. Pada workflow ini, node Color Manager berfungsi untuk membedakan setiap hasil klasifikasi mobil berdasarkan kategori kelayakannya menggunakan warna tertentu.</p>
+<p><img alt="original image" src="https://cdn.mathpix.com/snip/images/H_MvoShX9xCZ0RAymQjCHFOjvbX-yL1kwBrhF0j78_k.original.fullsize.png" /></p>
+<p>Node ini membantu membedakan setiap kategori hasil klasifikasi secara visual.</p>
+</section>
+<section id="color-appender">
+<h3>4. Color Appender<a class="headerlink" href="#color-appender" title="Link to this heading">#</a></h3>
+<p>Node Color Appender digunakan untuk menambahkan informasi warna dari node Color Manager ke dalam dataset.</p>
+<p>Dengan node ini, data hasil klasifikasi dapat ditampilkan menggunakan warna sesuai kategori mobil sehingga mempermudah proses visualisasi dan analisis data.</p>
+</section>
+<section id="decision-tree-learner">
+<h3>Decision Tree Learner<a class="headerlink" href="#decision-tree-learner" title="Link to this heading">#</a></h3>
+<p>Node Decision Tree Learner digunakan untuk membentuk model klasifikasi dalam bentuk pohon keputusan berdasarkan data latih yang telah dibagi sebelumnya pada node Table Partitioner. Node ini merupakan tahap utama dalam proses klasifikasi karena pada tahap ini algoritma Decision Tree mulai melakukan pembentukan aturan keputusan berdasarkan pola data pada dataset Car Evaluation.</p>
+<p>Algoritma Decision Tree bekerja dengan cara memilih atribut yang paling berpengaruh terhadap kategori kualitas mobil, kemudian membagi data menjadi beberapa percabangan hingga terbentuk struktur pohon keputusan. Setiap percabangan pada pohon menunjukkan kondisi tertentu dari atribut data yang digunakan.</p>
+<p>Berikut settingan yang digunakan dalam Decision Tree Learner:</p>
+<p><img alt="original image" src="https://cdn.mathpix.com/snip/images/gaIyN4BZ_JptVLXsWDYk4oQ19SW_FTj9dR42UyvSYdM.original.fullsize.png" /></p>
+<p>Hasil node ini berupa pohon keputusan yang digunakan untuk menentukan kategori kualitas mobil.</p>
+</section>
+<section id="decision-tree-predictor">
+<h3>Decision Tree Predictor<a class="headerlink" href="#decision-tree-predictor" title="Link to this heading">#</a></h3>
+<p>Node Decision Tree Predictor digunakan untuk melakukan proses klasifikasi pada data uji menggunakan pohon keputusan yang telah dibentuk sebelumnya.</p>
+<p>Node ini akan menghasilkan prediksi kategori mobil seperti:</p>
+<ul class="simple">
+<li><p>unacc</p></li>
+<li><p>acc</p></li>
+<li><p>good</p></li>
+<li><p>vgood</p></li>
+</ul>
+<p>Hasil prediksi akan dibandingkan dengan data asli pada tahap evaluasi.</p>
+</section>
+<section id="scorer">
+<h3>Scorer<a class="headerlink" href="#scorer" title="Link to this heading">#</a></h3>
+<p>Node Scorer digunakan untuk mengevaluasi hasil klasifikasi dari algoritma Decision Tree.</p>
+<p>Node ini membandingkan kategori asli pada dataset, dengan hasil prediksi dari Decision Tree Predictor.</p>
+<p>Hasil evaluasi:</p>
+<p><img alt="original image" src="https://cdn.mathpix.com/snip/images/sfYvYNTo9Cm8KuiarhfAkT47DDve-cuClB_KKoCpDho.original.fullsize.png" /></p>
+<p>Melalui node ini dapat diketahui tingkat akurasi yang didapat adalah 93% dalam algoritma Decision Tree untuk mengklasifikasikan kualitas mobil berdasarkan atribut pada dataset Car Evaluation.</p>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -424,14 +496,14 @@
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="right-next"
-       href="Data-Understanding.html"
-       title="next page">
+    <a class="left-prev"
+       href="NAIVE%20BAYESS.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Data Understanding</p>
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Analisis Data Menggunakan Naive Bayes</p>
       </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -439,6 +511,32 @@
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deskripsi-node-decision-tree-knime">Deskripsi Node Decision Tree KNIME</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#csv-reader">1. CSV Reader</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#table-partitioner">2. Table Partitioner</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#color-manager">3. Color Manager</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#color-appender">4. Color Appender</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-tree-learner">Decision Tree Learner</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-tree-predictor">Decision Tree Predictor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scorer">Scorer</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
