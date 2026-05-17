@@ -1,0 +1,1187 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Implementasi Rendom Forest Menggunakan Script Python pada KNIME &#8212; My PENDAT BOOK</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Random-Forest';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Implementasi Decision Tree Menggunakan KNIME" href="Decision-Tree.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpg" class="logo__image only-light" alt="My PENDAT BOOK - Home"/>
+    <img src="_static/logo.jpg" class="logo__image only-dark pst-js-only" alt="My PENDAT BOOK - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to my Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Data-Understanding.html">Data Understanding</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Bussines%20Understanding.html">Business Understanding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data%20Prepation.html">DATA PREPARATION</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Analisis_Kesuburan_Tanah_KNN.html">Laporan Analisis Kesuburan Tanah Menggunakan Metode K-Nearest Neighbor (KNN) di KNIME Analytics Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NAIVE%20BAYESS.html">Analisis Data Menggunakan Naive Bayes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Decision-Tree.html">Implementasi Decision Tree Menggunakan KNIME</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Implementasi Rendom Forest Menggunakan Script Python pada KNIME</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FRandom-Forest.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Random-Forest.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Implementasi Rendom Forest Menggunakan Script Python pada KNIME</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tahapan-workflow">Tahapan Workflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#csv-reader">1. CSV Reader</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#table-partitioner">2. Table Partitioner</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-script-1-training-save">3. Python Script 1 (Training + Save)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-import-library">a. Import Library</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-membaca-data-training">b. Membaca Data Training</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-memisahkan-fitur-dan-target">c. Memisahkan Fitur dan Target</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#d-encoding-data-kategorikal">d. Encoding Data Kategorikal</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#e-membentuk-model-random-forest">e. Membentuk Model Random Forest</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#f-proses-training">f. Proses Training</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-script-2-load-model-predict">4. Python Script 2 (Load Model + Predict)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-membaca-nama-fitur">a. Membaca Nama Fitur</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-membaca-data-testing">b. Membaca Data Testing</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">c. Memisahkan Fitur dan Target</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#d-encoding-data-testing">d. Encoding Data Testing</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#e-menyamakan-struktur-kolom">e. Menyamakan Struktur Kolom</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-training">Data Training</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-testing">Data Testing</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#f-load-model">f. Load Model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#g-proses-prediksi">g. Proses Prediksi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#h-menghitung-accuracy">h. Menghitung Accuracy</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#table-view">5. Table View</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scorer">6. Scorer</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="implementasi-rendom-forest-menggunakan-script-python-pada-knime">
+<h1>Implementasi Rendom Forest Menggunakan Script Python pada KNIME<a class="headerlink" href="#implementasi-rendom-forest-menggunakan-script-python-pada-knime" title="Link to this heading">#</a></h1>
+<p>Implementasi metode Random Forest menggunakan script Python pada KNIME dilakukan untuk mengklasifikasikan data evaluasi mobil menggunakan dataset dari Kaggle Car Evaluation Dataset (<a class="reference external" href="https://www.kaggle.com/datasets/kryusufkaya/car-evaluation">https://www.kaggle.com/datasets/kryusufkaya/car-evaluation</a>). Dataset ini memiliki atribut seperti buying , maint, doors, persons, lug_boot, safety, dan class. KNIME digunakan untuk membangun workflow machine learning, sedangkan Python digunakan untuk proses training dan prediksi menggunakan algoritma RandomForestClassifier dari library scikit-learn.</p>
+<p>Workflow terdiri dari CSV Reader, Table Partitioner, Python Script (Training), Python Script (Predict), dan Scorer. Data dibagi menjadi data training dan testing, kemudian model Random Forest dilatih menggunakan data training dan digunakan untuk memprediksi data testing. Hasil prediksi selanjutnya dievaluasi menggunakan node Scorer untuk mengetahui performa klasifikasi model.</p>
+<section id="tahapan-workflow">
+<h2>Tahapan Workflow<a class="headerlink" href="#tahapan-workflow" title="Link to this heading">#</a></h2>
+<p>Workflow Random Forest pada tugas ini digunakan untuk melakukan proses klasifikasi data menggunakan algoritma Random Forest dengan bantuan node Python pada KNIME. Proses dimulai dari pembacaan dataset, pembagian data menjadi data training dan data testing, pelatihan model menggunakan Random Forest, proses prediksi data uji, hingga evaluasi hasil klasifikasi menggunakan node Scorer.</p>
+<p>Berikut alur workflow yang digunakan:
+<img alt="" src="https://cdn.mathpix.com/snip/images/e0DQx6ctM7tr9Ed4qV8SsfoR8D2XDgceUDdI67Lsono.original.fullsize.png" /></p>
+<section id="csv-reader">
+<h3>1. CSV Reader<a class="headerlink" href="#csv-reader" title="Link to this heading">#</a></h3>
+<p>Node CSV Reader merupakan node pertama yang digunakan untuk membaca dataset berformat <code class="docutils literal notranslate"><span class="pre">.csv</span></code> ke dalam KNIME. Dataset yang dibaca akan diubah menjadi bentuk tabel sehingga dapat diproses lebih lanjut pada node berikutnya. Dataset ini terdiri dari beberapa atribut kategorikal, yaitu:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Atribut</p></th>
+<th class="head text-left"><p>Keterangan</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>buying</p></td>
+<td class="text-left"><p>Harga beli mobil</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>maint</p></td>
+<td class="text-left"><p>Biaya perawatan</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>doors</p></td>
+<td class="text-left"><p>Jumlah pintu</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>persons</p></td>
+<td class="text-left"><p>Kapasitas penumpang</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>lug_boot</p></td>
+<td class="text-left"><p>Ukuran bagasi</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>safety</p></td>
+<td class="text-left"><p>Tingkat keamanan</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>class</p></td>
+<td class="text-left"><p>Kategori evaluasi mobil</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Dataset Car Evaluation memiliki 1728 data dan seluruh atribut berupa data kategorikal tanpa missing value.</p>
+</section>
+<section id="table-partitioner">
+<h3>2. Table Partitioner<a class="headerlink" href="#table-partitioner" title="Link to this heading">#</a></h3>
+<p>Node Table Partitioner digunakan untuk membagi dataset menjadi dua bagian, yaitu:</p>
+<ul class="simple">
+<li><p>Data Training</p></li>
+<li><p>Data Testing</p></li>
+</ul>
+<p>Pada tugas kali ini, dilakukan pembagian dengan rasio 80% untuk data training dan 20% untuk data testing. Data training digunakan untuk membangun model Random Forest, sedangkan data testing digunakan untuk menguji performa model. Proses ini penting agar model dapat dievaluasi menggunakan data yang belum pernah dipelajari sebelumnya.</p>
+</section>
+<section id="python-script-1-training-save">
+<h3>3. Python Script 1 (Training + Save)<a class="headerlink" href="#python-script-1-training-save" title="Link to this heading">#</a></h3>
+<p>Node <strong>Python Script (Training)</strong> digunakan untuk membangun model klasifikasi Random Forest menggunakan data training dari dataset <em>Car Evaluation</em>. Pada tahap ini dilakukan proses pembacaan data, preprocessing, pembentukan model, hingga penyimpanan model untuk digunakan pada tahap prediksi.</p>
+<section id="a-import-library">
+<h4>a. Import Library<a class="headerlink" href="#a-import-library" title="Link to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">knime.scripting.io</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">knio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+</pre></div>
+</div>
+<p>Tahap pertama adalah melakukan import library yang dibutuhkan selama proses training model.</p>
+<p>Library <code class="docutils literal notranslate"><span class="pre">knime.scripting.io</span></code> digunakan sebagai penghubung antara KNIME dan Python sehingga data dari node KNIME dapat dibaca ke dalam script Python. Library <code class="docutils literal notranslate"><span class="pre">pandas</span></code> digunakan untuk mengolah data dalam bentuk dataframe agar lebih mudah diproses. Library <code class="docutils literal notranslate"><span class="pre">pickle</span></code> digunakan untuk menyimpan model Random Forest yang telah dilatih ke dalam file berekstensi <code class="docutils literal notranslate"><span class="pre">.pkl</span></code>, sehingga model dapat digunakan kembali tanpa perlu melakukan training ulang.</p>
+<p>Sementara itu, <code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code> dari library <em>scikit-learn</em> digunakan untuk membangun model klasifikasi Random Forest. Algoritma ini bekerja dengan menggabungkan banyak pohon keputusan (<em>decision tree</em>) untuk menghasilkan prediksi yang lebih stabil dan akurat.</p>
+</section>
+<section id="b-membaca-data-training">
+<h4>b. Membaca Data Training<a class="headerlink" href="#b-membaca-data-training" title="Link to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">knio</span><span class="o">.</span><span class="n">input_tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Pada tahap ini, data training yang berasal dari node <strong>Table Partitioner</strong> dibaca dari KNIME ke dalam Python.</p>
+<p><code class="docutils literal notranslate"><span class="pre">knio.input_tables[0]</span></code> menunjukkan tabel input pertama dari KNIME, kemudian fungsi <code class="docutils literal notranslate"><span class="pre">.to_pandas()</span></code> digunakan untuk mengubah data tersebut menjadi dataframe pandas.</p>
+<p>Hasil pembacaan data disimpan ke variabel <code class="docutils literal notranslate"><span class="pre">df</span></code>. Dataframe ini berisi seluruh atribut dataset Car Evaluation seperti:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">buying</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">maint</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">doors</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">persons</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lug_boot</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">safety</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">class</span></code></p></li>
+</ul>
+<p>Dataframe pandas dipilih karena mempermudah proses manipulasi data seperti pemisahan fitur, encoding, dan training model machine learning.</p>
+</section>
+<section id="c-memisahkan-fitur-dan-target">
+<h4>c. Memisahkan Fitur dan Target<a class="headerlink" href="#c-memisahkan-fitur-dan-target" title="Link to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Tahap berikutnya adalah memisahkan data menjadi fitur (<em>input</em>) dan target (<em>output</em>).</p>
+<p>Baris:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>digunakan untuk mengambil seluruh atribut selain kolom <code class="docutils literal notranslate"><span class="pre">class</span></code>. Data ini akan digunakan sebagai variabel input model Random Forest.</p>
+<p>Sedangkan:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_train</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>digunakan untuk mengambil kolom <code class="docutils literal notranslate"><span class="pre">class</span></code> sebagai target klasifikasi.</p>
+<p>Pada dataset Car Evaluation:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Kolom</p></th>
+<th class="head text-left"><p>Fungsi</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>buying</p></td>
+<td class="text-left"><p>Input</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>maint</p></td>
+<td class="text-left"><p>Input</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>doors</p></td>
+<td class="text-left"><p>Input</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>persons</p></td>
+<td class="text-left"><p>Input</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>lug_boot</p></td>
+<td class="text-left"><p>Input</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>safety</p></td>
+<td class="text-left"><p>Input</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>class</p></td>
+<td class="text-left"><p>Target</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Model Random Forest nantinya akan mempelajari hubungan antara atribut input dengan kategori evaluasi mobil pada kolom <code class="docutils literal notranslate"><span class="pre">class</span></code>.</p>
+</section>
+<section id="d-encoding-data-kategorikal">
+<h4>d. Encoding Data Kategorikal<a class="headerlink" href="#d-encoding-data-kategorikal" title="Link to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Seluruh atribut pada dataset Car Evaluation berbentuk data kategorikal atau teks, seperti:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>buying</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>low</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>high</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>vhigh</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Sedangkan algoritma Random Forest hanya dapat memproses data numerik. Oleh karena itu dilakukan proses <strong>One Hot Encoding</strong> menggunakan fungsi:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Fungsi ini mengubah setiap kategori menjadi kolom biner bernilai 0 dan 1.</p>
+<p>Contoh:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>buying</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>low</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>high</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>akan berubah menjadi:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>buying_low</p></th>
+<th class="head text-left"><p>buying_high</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>1</p></td>
+<td class="text-left"><p>0</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>0</p></td>
+<td class="text-left"><p>1</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Artinya:</p>
+<ul class="simple">
+<li><p>nilai <code class="docutils literal notranslate"><span class="pre">1</span></code> menunjukkan kategori aktif,</p></li>
+<li><p>nilai <code class="docutils literal notranslate"><span class="pre">0</span></code> menunjukkan kategori tidak aktif.</p></li>
+</ul>
+<p>Proses encoding sangat penting karena model machine learning tidak dapat memahami data berbentuk teks secara langsung.</p>
+<p>Selain itu, hasil encoding membuat seluruh data memiliki format numerik sehingga dapat diproses oleh Random Forest.</p>
+</section>
+<section id="e-membentuk-model-random-forest">
+<h4>e. Membentuk Model Random Forest<a class="headerlink" href="#e-membentuk-model-random-forest" title="Link to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Pada tahap ini dilakukan pembentukan model Random Forest menggunakan class <code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code>.</p>
+<p>Parameter:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span>
+</pre></div>
+</div>
+<p>menunjukkan bahwa model akan membangun sebanyak 100 pohon keputusan (<em>decision tree</em>).</p>
+<p>Semakin banyak jumlah tree, maka model biasanya menjadi lebih stabil dan akurat karena prediksi tidak hanya bergantung pada satu pohon saja.</p>
+<p>Sedangkan:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+</pre></div>
+</div>
+<p>digunakan untuk mengatur proses random agar hasil training tetap konsisten setiap kali program dijalankan.</p>
+<p>Cara kerja Random Forest adalah:</p>
+<ol class="arabic simple">
+<li><p>Membuat banyak sampel data secara acak (<em>bootstrap sampling</em>)</p></li>
+<li><p>Membentuk decision tree pada setiap sampel data</p></li>
+<li><p>Setiap tree menggunakan kombinasi fitur yang berbeda secara acak</p></li>
+<li><p>Seluruh tree melakukan prediksi</p></li>
+<li><p>Hasil akhir ditentukan berdasarkan voting mayoritas</p></li>
+</ol>
+<p>Karena menggunakan banyak tree, Random Forest mampu mengurangi risiko <em>overfitting</em> yang sering terjadi pada single decision tree.</p>
+</section>
+<section id="f-proses-training">
+<h4>f. Proses Training<a class="headerlink" href="#f-proses-training" title="Link to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Tahap training merupakan proses utama dalam machine learning, yaitu melatih model menggunakan data training.</p>
+<p>Perintah:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>digunakan untuk membuat model mempelajari pola hubungan antara atribut input dan target klasifikasi.</p>
+<p>Pada proses ini Random Forest bekerja melalui beberapa tahapan:</p>
+<ol class="arabic simple">
+<li><p>Bootstrap Sampling</p></li>
+</ol>
+<p>Model mengambil sampel data training secara acak dari dataset asli. Setiap decision tree mendapatkan data sampel yang berbeda.</p>
+<p>Misalnya:</p>
+<ul class="simple">
+<li><p>Tree 1 → data acak A</p></li>
+<li><p>Tree 2 → data acak B</p></li>
+<li><p>Tree 3 → data acak C</p></li>
+</ul>
+<p>Teknik ini disebut <em>bootstrap sampling</em>.</p>
+<ol class="arabic simple" start="2">
+<li><p>Pembentukan Decision Tree</p></li>
+</ol>
+<p>Setiap sampel data digunakan untuk membentuk satu decision tree.</p>
+<p>Pada setiap node tree, algoritma mencari atribut terbaik untuk memisahkan data menggunakan perhitungan seperti:</p>
+<div class="math notranslate nohighlight">
+\[
+Entropy(S) = -\sum p_i \log_2 p_i
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+Gain(S,A) = Entropy(S) - \sum \frac{|S_v|}{|S|} \times Entropy(S_v)
+\]</div>
+<p>Atribut dengan nilai <em>information gain</em> tertinggi akan dipilih sebagai percabangan terbaik.</p>
+<ol class="arabic simple" start="3">
+<li><p>Random Feature Selection</p></li>
+</ol>
+<p>Pada setiap percabangan tree, Random Forest tidak menggunakan seluruh atribut, melainkan hanya memilih beberapa fitur secara acak.</p>
+<p>Contoh:</p>
+<ul class="simple">
+<li><p>Tree pertama mungkin memilih <code class="docutils literal notranslate"><span class="pre">buying</span></code> dan <code class="docutils literal notranslate"><span class="pre">safety</span></code></p></li>
+<li><p>Tree kedua memilih <code class="docutils literal notranslate"><span class="pre">maint</span></code> dan <code class="docutils literal notranslate"><span class="pre">persons</span></code></p></li>
+</ul>
+<p>Hal ini membuat setiap tree menjadi berbeda dan meningkatkan keberagaman model.</p>
+<ol class="arabic simple" start="4">
+<li><p>Voting Seluruh Tree</p></li>
+</ol>
+<p>Setelah semua tree selesai dibangun, setiap tree menghasilkan prediksi kelas mobil.</p>
+<p>Contoh:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Tree</p></th>
+<th class="head text-left"><p>Prediksi</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Tree 1</p></td>
+<td class="text-left"><p>acc</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Tree 2</p></td>
+<td class="text-left"><p>acc</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Tree 3</p></td>
+<td class="text-left"><p>unacc</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Tree 4</p></td>
+<td class="text-left"><p>acc</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Hasil akhir ditentukan berdasarkan voting mayoritas:</p>
+<div class="math notranslate nohighlight">
+\[
+H(x) = \text{majority vote}(h_1, h_2, \ldots, h_n)
+\]</div>
+<p>Karena mayoritas tree menghasilkan <code class="docutils literal notranslate"><span class="pre">acc</span></code>, maka prediksi akhir adalah <code class="docutils literal notranslate"><span class="pre">acc</span></code>.</p>
+<p>Metode voting inilah yang membuat Random Forest memiliki performa klasifikasi yang lebih baik dan lebih stabil dibandingkan decision tree tunggal.</p>
+</section>
+</section>
+<section id="python-script-2-load-model-predict">
+<h3>4. Python Script 2 (Load Model + Predict)<a class="headerlink" href="#python-script-2-load-model-predict" title="Link to this heading">#</a></h3>
+<p>Node <strong>Python Script 2</strong> digunakan untuk melakukan proses prediksi data testing menggunakan model Random Forest yang telah dilatih pada tahap sebelumnya. Selain melakukan prediksi, node ini juga digunakan untuk menghitung tingkat akurasi model terhadap data uji.</p>
+<section id="a-membaca-nama-fitur">
+<h4>a. Membaca Nama Fitur<a class="headerlink" href="#a-membaca-nama-fitur" title="Link to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">feature_df</span> <span class="o">=</span> <span class="n">knio</span><span class="o">.</span><span class="n">input_tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+
+<span class="n">model_features</span> <span class="o">=</span> <span class="n">feature_df</span><span class="p">[</span><span class="s2">&quot;feature_names&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Pada tahap training, hasil proses <em>One Hot Encoding</em> menghasilkan banyak kolom baru sesuai kategori atribut pada dataset Car Evaluation, seperti:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>buying_low</p></th>
+<th class="head text-left"><p>buying_high</p></th>
+<th class="head text-left"><p>doors_2</p></th>
+<th class="head text-left"><p>doors_4</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>1</p></td>
+<td class="text-left"><p>0</p></td>
+<td class="text-left"><p>1</p></td>
+<td class="text-left"><p>0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Nama seluruh kolom hasil encoding tersebut disimpan dan dikirim ke Python Script 2 agar struktur data testing dapat disamakan dengan data training.</p>
+<p>Hal ini penting karena:</p>
+<ul class="simple">
+<li><p>Model Random Forest hanya dapat menerima jumlah dan urutan fitur yang sama seperti saat training.</p></li>
+<li><p>Data testing bisa memiliki kategori yang berbeda dengan data training.</p></li>
+</ul>
+<p>Contoh:</p>
+<ul class="simple">
+<li><p>Pada data training terdapat kategori <code class="docutils literal notranslate"><span class="pre">buying_high</span></code></p></li>
+<li><p>Namun pada data testing kategori tersebut tidak muncul</p></li>
+</ul>
+<p>Jika struktur kolom berbeda, maka proses prediksi akan gagal.</p>
+<p>Karena itu seluruh nama fitur disimpan dalam variabel:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_features</span>
+</pre></div>
+</div>
+</section>
+<section id="b-membaca-data-testing">
+<h4>b. Membaca Data Testing<a class="headerlink" href="#b-membaca-data-testing" title="Link to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">knio</span><span class="o">.</span><span class="n">input_tables</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Data testing hasil <em>Partitioning</em> dibaca dari KNIME lalu diubah menjadi dataframe pandas agar dapat diproses menggunakan Python dan Scikit-Learn.</p>
+<p>Dataset yang digunakan adalah <strong>Car Evaluation Dataset</strong> yang berisi atribut:</p>
+<ul class="simple">
+<li><p>buying</p></li>
+<li><p>maint</p></li>
+<li><p>doors</p></li>
+<li><p>persons</p></li>
+<li><p>lug_boot</p></li>
+<li><p>safety</p></li>
+</ul>
+<p>Serta target:</p>
+<ul class="simple">
+<li><p>class</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="id1">
+<h4>c. Memisahkan Fitur dan Target<a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y_true</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Tahap ini digunakan untuk memisahkan:</p>
+<ul class="simple">
+<li><p><strong>Fitur (X_test)</strong> → atribut input mobil</p></li>
+<li><p><strong>Target (y_true)</strong> → kelas asli mobil</p></li>
+</ul>
+<p>Contoh data:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>buying</p></th>
+<th class="head text-left"><p>maint</p></th>
+<th class="head text-left"><p>safety</p></th>
+<th class="head text-left"><p>class</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>low</p></td>
+<td class="text-left"><p>med</p></td>
+<td class="text-left"><p>high</p></td>
+<td class="text-left"><p>good</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Maka:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">X_test</span></code> berisi:</p>
+<ul>
+<li><p>buying</p></li>
+<li><p>maint</p></li>
+<li><p>safety</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y_true</span></code> berisi:</p>
+<ul>
+<li><p>good</p></li>
+</ul>
+</li>
+</ul>
+<p>Nilai <code class="docutils literal notranslate"><span class="pre">y_true</span></code> nantinya digunakan untuk membandingkan hasil prediksi model.</p>
+</section>
+<section id="d-encoding-data-testing">
+<h4>d. Encoding Data Testing<a class="headerlink" href="#d-encoding-data-testing" title="Link to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Karena seluruh atribut pada dataset Car Evaluation berbentuk kategorikal (teks), maka data testing juga harus diubah menjadi bentuk numerik menggunakan <em>One Hot Encoding</em>.</p>
+<p>Contoh:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>safety</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>high</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Menjadi:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>safety_high</p></th>
+<th class="head text-left"><p>safety_low</p></th>
+<th class="head text-left"><p>safety_med</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>1</p></td>
+<td class="text-left"><p>0</p></td>
+<td class="text-left"><p>0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Proses ini wajib dilakukan karena algoritma Random Forest tidak dapat memproses data string secara langsung.</p>
+</section>
+<section id="e-menyamakan-struktur-kolom">
+<h4>e. Menyamakan Struktur Kolom<a class="headerlink" href="#e-menyamakan-struktur-kolom" title="Link to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">model_features</span><span class="p">,</span>
+    <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Tahap ini merupakan salah satu proses paling penting pada sistem prediksi.</p>
+<p>Hasil encoding data testing belum tentu sama dengan data training karena:</p>
+<ul class="simple">
+<li><p>Ada kategori yang tidak muncul</p></li>
+<li><p>Urutan kolom bisa berbeda</p></li>
+</ul>
+<p>Contoh:</p>
+</section>
+</section>
+<section id="data-training">
+<h3>Data Training<a class="headerlink" href="#data-training" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>buying_low</p></th>
+<th class="head text-left"><p>buying_high</p></th>
+<th class="head text-left"><p>safety_high</p></th>
+</tr>
+</thead>
+</table>
+</div>
+</section>
+<section id="data-testing">
+<h3>Data Testing<a class="headerlink" href="#data-testing" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>buying_low</p></th>
+<th class="head text-left"><p>safety_high</p></th>
+</tr>
+</thead>
+</table>
+</div>
+<p>Kolom <code class="docutils literal notranslate"><span class="pre">buying_high</span></code> tidak muncul pada data testing.</p>
+<p>Jika langsung diprediksi:</p>
+<ul class="simple">
+<li><p>jumlah fitur berbeda</p></li>
+<li><p>model akan error</p></li>
+</ul>
+<p>Karena itu digunakan:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">reindex</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Fungsi ini digunakan untuk:</p>
+<ol class="arabic simple">
+<li><p>Menyamakan urutan kolom</p></li>
+<li><p>Menambahkan kolom yang hilang</p></li>
+<li><p>Mengisi nilai kosong dengan 0</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span>
+</pre></div>
+</div>
+<p>Artinya:</p>
+<ul class="simple">
+<li><p>jika suatu kategori tidak muncul pada data testing</p></li>
+<li><p>maka nilainya dianggap 0</p></li>
+</ul>
+<p>Dengan cara ini, struktur fitur data testing menjadi identik dengan data training sehingga model dapat melakukan prediksi dengan benar.</p>
+<section id="f-load-model">
+<h4>f. Load Model<a class="headerlink" href="#f-load-model" title="Link to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;rf_model.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Pada tahap training sebelumnya, model Random Forest telah disimpan ke file:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rf_model</span><span class="o">.</span><span class="n">pkl</span>
+</pre></div>
+</div>
+<p>File tersebut kemudian dipanggil kembali menggunakan library <code class="docutils literal notranslate"><span class="pre">pickle</span></code>.</p>
+<p>Fungsi:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">wb</span></code> → menyimpan model (<em>write binary</em>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rb</span></code> → membaca model (<em>read binary</em>)</p></li>
+</ul>
+<p>Tahap ini memungkinkan model yang sudah dilatih digunakan kembali tanpa harus melakukan training ulang.</p>
+</section>
+<section id="g-proses-prediksi">
+<h4>g. Proses Prediksi<a class="headerlink" href="#g-proses-prediksi" title="Link to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Tahap ini digunakan untuk melakukan klasifikasi data testing menggunakan model Random Forest.</p>
+<p>Cara kerja Random Forest saat prediksi:</p>
+<ol class="arabic simple">
+<li><p>Data testing masuk ke seluruh decision tree</p></li>
+<li><p>Setiap tree menghasilkan prediksi kelas</p></li>
+<li><p>Seluruh hasil tree dikumpulkan</p></li>
+<li><p>Dilakukan voting mayoritas</p></li>
+<li><p>Kelas dengan suara terbanyak menjadi hasil akhir</p></li>
+</ol>
+</section>
+<section id="h-menghitung-accuracy">
+<h4>h. Menghitung Accuracy<a class="headerlink" href="#h-menghitung-accuracy" title="Link to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Tahap ini digunakan untuk menghitung tingkat akurasi model terhadap data testing. Semakin tinggi nilai accuracy, maka semakin baik kemampuan model Random Forest dalam mengklasifikasikan data mobil pada dataset Car Evaluation.</p>
+</section>
+</section>
+<section id="table-view">
+<h3>5. Table View<a class="headerlink" href="#table-view" title="Link to this heading">#</a></h3>
+<p>Setelah proses training dan prediksi selesai dilakukan, node Table View digunakan kembali untuk menampilkan hasil klasifikasi Random Forest. Pada kode Python Predict, hasil prediksi disimpan menggunakan perintah:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">result</span><span class="p">[</span><span class="s2">&quot;Prediction&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_pred</span>
+</pre></div>
+</div>
+<p>Artinya, model Random Forest akan menambahkan kolom baru bernama Prediction yang berisi hasil prediksi kelas mobil.</p>
+<p>Kemudian data dikirim kembali ke KNIME:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">knio</span><span class="o">.</span><span class="n">output_tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">knio</span><span class="o">.</span><span class="n">Table</span><span class="o">.</span><span class="n">from_pandas</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Hasil tersebut ditampilkan menggunakan Table View sehingga pengguna dapat membandingkan:</p>
+<ul class="simple">
+<li><p>nilai asli (class)</p></li>
+<li><p>hasil prediksi (Prediction)</p></li>
+</ul>
+<p>Jika nilai pada kolom Prediction sama dengan class, maka data berhasil diklasifikasikan dengan benar oleh model Random Forest.</p>
+</section>
+<section id="scorer">
+<h3>6. Scorer<a class="headerlink" href="#scorer" title="Link to this heading">#</a></h3>
+<p>Node Scorer digunakan untuk mengevaluasi hasil klasifikasi dari Random Forest.</p>
+<p>Node ini membandingkan:</p>
+<ul class="simple">
+<li><p>nilai asli (class)</p></li>
+<li><p>hasil prediksi (Prediction)</p></li>
+</ul>
+<p>Output yang dihasilkan biasanya berupa:</p>
+<ul class="simple">
+<li><p>Accuracy</p></li>
+<li><p>Confusion Matrix</p></li>
+<li><p>Precision</p></li>
+<li><p>Recall</p></li>
+</ul>
+<p>Scorer digunakan untuk mengetahui seberapa baik model Random Forest dalam melakukan klasifikasi data evaluasi mobil.</p>
+<p><img alt="original image" src="https://cdn.mathpix.com/snip/images/QPlza_BeoVXWyW1VKOR5MaNvOlNSgwSSiADSInr4Uac.original.fullsize.png" /></p>
+<p>Berdasarkan gambar diatas, model Random Forest memperoleh nilai Accuracy sebesar:</p>
+<ul class="simple">
+<li><p>Accuracy=0.962</p></li>
+</ul>
+<p>yang berarti model mampu mengklasifikasikan data dengan tingkat ketepatan sebesar 96,2%. Selain itu, nilai Cohen’s Kappa sebesar:</p>
+<ul class="simple">
+<li><p>Kappa=0.924</p></li>
+</ul>
+<p>Hal ini menunjukkan bahwa tingkat kesesuaian hasil prediksi model dengan data asli termasuk kategori sangat baik.</p>
+<p>Hasil evaluasi tiap kelas juga menunjukkan performa yang tinggi:</p>
+<ul class="simple">
+<li><p>Kelas unacc memiliki Recall 0.965 dan Precision 0.991, yang berarti model sangat baik dalam mengenali data unacc.</p></li>
+<li><p>Kelas acc memiliki Recall 0.965 dan Precision 0.901, sehingga sebagian besar data berhasil diprediksi dengan benar meskipun masih terdapat sedikit kesalahan klasifikasi.</p></li>
+<li><p>Kelas vgood memiliki Recall 0.882 dan Precision 0.938. Nilai recall yang lebih rendah menunjukkan masih ada beberapa data vgood yang belum terdeteksi dengan sempurna.</p></li>
+<li><p>Kelas good memiliki Recall 1.000 yang berarti seluruh data good berhasil dikenali oleh model.</p></li>
+</ul>
+<p>Secara keseluruhan, hasil evaluasi menunjukkan bahwa algoritma Random Forest memiliki performa yang sangat baik dalam melakukan klasifikasi data evaluasi mobil dengan tingkat kesalahan yang rendah dan hasil prediksi yang konsisten.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Decision-Tree.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Implementasi Decision Tree Menggunakan KNIME</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tahapan-workflow">Tahapan Workflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#csv-reader">1. CSV Reader</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#table-partitioner">2. Table Partitioner</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-script-1-training-save">3. Python Script 1 (Training + Save)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-import-library">a. Import Library</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-membaca-data-training">b. Membaca Data Training</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#c-memisahkan-fitur-dan-target">c. Memisahkan Fitur dan Target</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#d-encoding-data-kategorikal">d. Encoding Data Kategorikal</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#e-membentuk-model-random-forest">e. Membentuk Model Random Forest</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#f-proses-training">f. Proses Training</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-script-2-load-model-predict">4. Python Script 2 (Load Model + Predict)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-membaca-nama-fitur">a. Membaca Nama Fitur</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#b-membaca-data-testing">b. Membaca Data Testing</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">c. Memisahkan Fitur dan Target</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#d-encoding-data-testing">d. Encoding Data Testing</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#e-menyamakan-struktur-kolom">e. Menyamakan Struktur Kolom</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-training">Data Training</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-testing">Data Testing</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#f-load-model">f. Load Model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#g-proses-prediksi">g. Proses Prediksi</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#h-menghitung-accuracy">h. Menghitung Accuracy</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#table-view">5. Table View</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scorer">6. Scorer</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By MOHAMMAD SULTON MUQSITH ASSIDIQI
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
