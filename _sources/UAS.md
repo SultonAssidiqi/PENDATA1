@@ -643,7 +643,5 @@ Alur kerja (*workflow*) yang digunakan dalam Orange mencakup:
 
 Paper pendamping: *"Student Performance Classification Using Artificial Intelligence Techniques"*, dipublikasikan dalam **Advances in Intelligent Systems and Computing**, vol. 1095.
 
----
 
-*Lisensi: [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/legalcode)*
 
