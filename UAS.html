@@ -1,0 +1,1539 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>UAS | Analisis Perbandingan Decision Tree dan Random Forest &#8212; My PENDAT BOOK</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'UAS';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Model Explainability dengan Skforecast" href="ExplaiabilitySKforecast.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpg" class="logo__image only-light" alt="My PENDAT BOOK - Home"/>
+    <img src="_static/logo.jpg" class="logo__image only-dark pst-js-only" alt="My PENDAT BOOK - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to my Jupyter Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Data-Understanding.html">Data Understanding</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Bussines%20Understanding.html">Business Understanding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data%20Prepation.html">DATA PREPARATION</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Analisis_Kesuburan_Tanah_KNN.html">Laporan Analisis Kesuburan Tanah Menggunakan Metode K-Nearest Neighbor (KNN) di KNIME Analytics Platform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NAIVE%20BAYESS.html">Analisis Data Menggunakan Naive Bayes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Decision-Tree.html">Implementasi Decision Tree Menggunakan KNIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Random-Forest.html">Implementasi Rendom Forest Menggunakan Script Python pada KNIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tugas-analisa-data-menggunakan-regresi-linier.html">Tugas Pertemuan 13: Analisa Data Menggunakan Regresi Linier</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="Crawling-Data-NO2.html">Prediksi Kadar Nitrogen Dioksida (NO₂) di Kota Probolinggo Menggunakan Algoritma K-Nearest Neighbor (KNN)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ExplaiabilitySKforecast.html">Model Explainability dengan Skforecast</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">UAS | Analisis Perbandingan Decision Tree dan Random Forest</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FUAS.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/UAS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>UAS | Analisis Perbandingan Decision Tree dan Random Forest</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">UAS | Analisis Perbandingan Decision Tree dan Random Forest</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#identitas-saya">Identitas Saya</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variabel-target-output">Variabel Target (Output)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kelompok-fitur-31-variabel">Kelompok Fitur (31 Variabel)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitur-personal-variabel-110">1. Fitur Personal (Variabel 1–10)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitur-keluarga-variabel-1116">2. Fitur Keluarga (Variabel 11–16)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitur-kebiasaan-belajar-variabel-1731">3. Fitur Kebiasaan Belajar (Variabel 17–31)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relevansi-untuk-random-forest-decision-tree">Relevansi untuk Random Forest &amp; Decision Tree</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#potensi-analisis">Potensi Analisis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-dataset-python">Import Dataset (Python)</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-menggunakan-python-jupyter-notebook">Analisis Menggunakan Python (Jupyter Notebook)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fokus-analisis">Fokus Analisis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pendahuluan">1. Pendahuluan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalasi-dan-import-library">2. Instalasi dan Import Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-dataset">3. Load Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data">4. Eksplorasi Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-output-grade">5. Distribusi OUTPUT Grade</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-target-baru-kategori-performa">6. Membuat Target Baru: Kategori Performa</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-data">7. Preprocessing Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#split-data-training-dan-testing">8. Split Data Training dan Testing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemodelan-decision-tree">9. Pemodelan Decision Tree</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemodelan-random-forest">10. Pemodelan Random Forest</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-model">11. Evaluasi Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix">12. Confusion Matrix</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix-decision-tree">Confusion Matrix — Decision Tree</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix-random-forest">Confusion Matrix — Random Forest</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-decision-tree">13. Visualisasi Decision Tree</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-importance-pada-random-forest">14. Feature Importance pada Random Forest</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-hasil-model">15. Perbandingan Hasil Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mengapa-random-forest-lebih-unggul">Mengapa Random Forest Lebih Unggul?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menyimpan-hasil-evaluasi-dan-prediksi">16. Menyimpan Hasil Evaluasi dan Prediksi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">18. Kesimpulan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-tambahan-menggunakan-orange-data-mining">Analisis Tambahan Menggunakan Orange Data Mining</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#laporan-ini-merupakan-bagian-dari-tugas-akhir-mata-kuliah-penambangan-data-program-studi-teknik-informatika-tools-google-colab-python"><em>Laporan ini merupakan bagian dari tugas akhir mata kuliah Penambangan Data, Program Studi Teknik Informatika.</em>
+<em>Tools: Google Colab (Python).</em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referensi">Referensi</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="uas-analisis-perbandingan-decision-tree-dan-random-forest">
+<h1>UAS | Analisis Perbandingan Decision Tree dan Random Forest<a class="headerlink" href="#uas-analisis-perbandingan-decision-tree-dan-random-forest" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p><strong>Sumber:</strong> <a class="reference external" href="https://archive.ics.uci.edu/dataset/856/higher+education+students+performance+evaluation">UCI Machine Learning Repository</a>
+<strong>Tema Analisis:</strong> Random Forest &amp; Decision Tree</p>
+</div></blockquote>
+<section id="identitas-saya">
+<h2>Identitas Saya<a class="headerlink" href="#identitas-saya" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Keterangan</p></th>
+<th class="head text-left"><p>Isi</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Nama</p></td>
+<td class="text-left"><p>Moh. Sulton Muqsith A.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>NIM</p></td>
+<td class="text-left"><p>240411100221</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Mata Kuliah</p></td>
+<td class="text-left"><p>Penambangan Data / Data Mining</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Kelas</p></td>
+<td class="text-left"><p>Penambangan Data B</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Dosen Pengampu</p></td>
+<td class="text-left"><p>Bapak Mula’ab, <a class="reference external" href="http://S.Si">S.Si</a>., M.Kom.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Tools Utama</p></td>
+<td class="text-left"><p>IPYNB / Google Colab dan Orange</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Metode</p></td>
+<td class="text-left"><p>Decision Tree dan Random Forest</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Dataset</p></td>
+<td class="text-left"><p>Higher Education Students Performance Evaluation</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Sumber Dataset</p></td>
+<td class="text-left"><p>UCI Machine Learning Repository</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<p>Dataset ini dikumpulkan dari mahasiswa <strong>Fakultas Teknik</strong> dan <strong>Fakultas Ilmu Pendidikan</strong> pada tahun 2019, dengan tujuan memprediksi performa mahasiswa di akhir semester menggunakan teknik Machine Learning. Dataset tersedia di UCI Machine Learning Repository dan bersifat <strong>multivariate</strong> dengan tugas utama <strong>klasifikasi</strong>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Atribut</p></th>
+<th class="head text-left"><p>Detail</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Jumlah Instansi</p></td>
+<td class="text-left"><p>145</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Jumlah Fitur</p></td>
+<td class="text-left"><p>31</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Tipe Fitur</p></td>
+<td class="text-left"><p>Integer (Kategorik)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Missing Values</p></td>
+<td class="text-left"><p>Tidak ada</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Domain</p></td>
+<td class="text-left"><p>Ilmu Sosial / Pendidikan</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="variabel-target-output">
+<h2>Variabel Target (Output)<a class="headerlink" href="#variabel-target-output" title="Link to this heading">#</a></h2>
+<p>Variabel output adalah <strong>nilai akhir mata kuliah</strong> dengan 8 kelas:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Kode</p></th>
+<th class="head text-left"><p>Label</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>0</p></td>
+<td class="text-left"><p>Fail</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>1</p></td>
+<td class="text-left"><p>DD</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>2</p></td>
+<td class="text-left"><p>DC</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>3</p></td>
+<td class="text-left"><p>CC</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>4</p></td>
+<td class="text-left"><p>CB</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>5</p></td>
+<td class="text-left"><p>BB</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>6</p></td>
+<td class="text-left"><p>BA</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>7</p></td>
+<td class="text-left"><p>AA</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Ini menjadikan masalah ini sebagai <strong>klasifikasi multi-kelas</strong>, yang sangat cocok untuk algoritma Random Forest dan Decision Tree.</p>
+</section>
+<hr class="docutils" />
+<section id="kelompok-fitur-31-variabel">
+<h2>Kelompok Fitur (31 Variabel)<a class="headerlink" href="#kelompok-fitur-31-variabel" title="Link to this heading">#</a></h2>
+<p>Fitur nomor 1–10 mencakup pertanyaan personal, fitur 11–16 mencakup pertanyaan tentang keluarga, dan fitur sisanya mencakup kebiasaan belajar.</p>
+<section id="fitur-personal-variabel-110">
+<h3>1. Fitur Personal (Variabel 1–10)<a class="headerlink" href="#fitur-personal-variabel-110" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>No</p></th>
+<th class="head text-left"><p>Variabel</p></th>
+<th class="head text-left"><p>Keterangan</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>1</p></td>
+<td class="text-left"><p>Student Age</p></td>
+<td class="text-left"><p>1: 18-21, 2: 22-25, 3: di atas 26</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>2</p></td>
+<td class="text-left"><p>Sex</p></td>
+<td class="text-left"><p>1: Perempuan, 2: Laki-laki</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>3</p></td>
+<td class="text-left"><p>Graduated High-School Type</p></td>
+<td class="text-left"><p>1: Swasta, 2: Negeri, 3: Lainnya</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>4</p></td>
+<td class="text-left"><p>Scholarship Type</p></td>
+<td class="text-left"><p>1: Tidak ada, 2: 25%, 3: 50%, 4: 75%, 5: Penuh</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>5</p></td>
+<td class="text-left"><p>Additional Work</p></td>
+<td class="text-left"><p>1: Ya, 2: Tidak</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>6</p></td>
+<td class="text-left"><p>Regular Artistic or Sports Activity</p></td>
+<td class="text-left"><p>1: Ya, 2: Tidak</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>7</p></td>
+<td class="text-left"><p>Do You Have a Partner</p></td>
+<td class="text-left"><p>1: Ya, 2: Tidak</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>8</p></td>
+<td class="text-left"><p>Total Salary (if available)</p></td>
+<td class="text-left"><p>1: $135-200, 2: $201-270, 3: $271-340, 4: $341-410, 5: &gt;$410</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>9</p></td>
+<td class="text-left"><p>Transportation to University</p></td>
+<td class="text-left"><p>1: Bus, 2: Mobil/Taksi, 3: Sepeda, 4: Lainnya</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>10</p></td>
+<td class="text-left"><p>Accommodation Type</p></td>
+<td class="text-left"><p>1: Sewa, 2: Asrama, 3: Keluarga, 4: Lainnya</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="fitur-keluarga-variabel-1116">
+<h3>2. Fitur Keluarga (Variabel 11–16)<a class="headerlink" href="#fitur-keluarga-variabel-1116" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>No</p></th>
+<th class="head text-left"><p>Variabel</p></th>
+<th class="head text-left"><p>Keterangan</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>11</p></td>
+<td class="text-left"><p>Mother’s Education</p></td>
+<td class="text-left"><p>1: SD, 2: SMP, 3: SMA, 4: Universitas, 5: S2, 6: S3</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>12</p></td>
+<td class="text-left"><p>Father’s Education</p></td>
+<td class="text-left"><p>1: SD, 2: SMP, 3: SMA, 4: Universitas, 5: S2, 6: S3</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>13</p></td>
+<td class="text-left"><p>Number of Siblings</p></td>
+<td class="text-left"><p>1: 1, 2: 2, 3: 3, 4: 4, 5: 5 atau lebih</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>14</p></td>
+<td class="text-left"><p>Parental Status</p></td>
+<td class="text-left"><p>1: Menikah, 2: Cerai, 3: Meninggal (salah satu/keduanya)</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>15</p></td>
+<td class="text-left"><p>Mother’s Occupation</p></td>
+<td class="text-left"><p>1: Pensiun, 2: Ibu Rumah Tangga, 3: PNS, 4: Swasta, 5: Wirausaha, 6: Lainnya</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>16</p></td>
+<td class="text-left"><p>Father’s Occupation</p></td>
+<td class="text-left"><p>1: Pensiun, 2: PNS, 3: Swasta, 4: Wirausaha, 5: Lainnya</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="fitur-kebiasaan-belajar-variabel-1731">
+<h3>3. Fitur Kebiasaan Belajar (Variabel 17–31)<a class="headerlink" href="#fitur-kebiasaan-belajar-variabel-1731" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>No</p></th>
+<th class="head text-left"><p>Variabel</p></th>
+<th class="head text-left"><p>Keterangan</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>17</p></td>
+<td class="text-left"><p>Weekly Study Hours</p></td>
+<td class="text-left"><p>1: Tidak ada, 2: &lt;5 jam, 3: 6-10 jam, 4: 11-20 jam, 5: &gt;20 jam</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>18</p></td>
+<td class="text-left"><p>Reading Frequency (Non-Scientific)</p></td>
+<td class="text-left"><p>1: Tidak pernah, 2: Kadang, 3: Sering</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>19</p></td>
+<td class="text-left"><p>Reading Frequency (Scientific)</p></td>
+<td class="text-left"><p>1: Tidak pernah, 2: Kadang, 3: Sering</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>20</p></td>
+<td class="text-left"><p>Attendance to Seminars/Conferences</p></td>
+<td class="text-left"><p>1: Ya, 2: Tidak</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>21</p></td>
+<td class="text-left"><p>Impact of Projects on Success</p></td>
+<td class="text-left"><p>1: Positif, 2: Negatif, 3: Netral</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>22</p></td>
+<td class="text-left"><p>Attendance to Classes</p></td>
+<td class="text-left"><p>1: Selalu, 2: Kadang, 3: Tidak pernah</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>23</p></td>
+<td class="text-left"><p>Preparation to Midterm Exams 1</p></td>
+<td class="text-left"><p>1: Sendiri, 2: Bersama teman, 3: Tidak berlaku</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>24</p></td>
+<td class="text-left"><p>Preparation to Midterm Exams 2</p></td>
+<td class="text-left"><p>1: Mendekati ujian, 2: Rutin selama semester, 3: Tidak pernah</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>25</p></td>
+<td class="text-left"><p>Taking Notes in Classes</p></td>
+<td class="text-left"><p>1: Tidak pernah, 2: Kadang, 3: Selalu</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>26</p></td>
+<td class="text-left"><p>Listening in Classes</p></td>
+<td class="text-left"><p>1: Tidak pernah, 2: Kadang, 3: Selalu</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>27</p></td>
+<td class="text-left"><p>Discussion Improves Interest</p></td>
+<td class="text-left"><p>1: Tidak pernah, 2: Kadang, 3: Selalu</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>28</p></td>
+<td class="text-left"><p>Flip-Classroom</p></td>
+<td class="text-left"><p>1: Tidak berguna, 2: Berguna, 3: Tidak berlaku</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>29</p></td>
+<td class="text-left"><p>Cumulative GPA Last Semester (/4.00)</p></td>
+<td class="text-left"><p>1: &lt;2.00, 2: 2.00-2.49, 3: 2.50-2.99, 4: 3.00-3.49, 5: &gt;3.49</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>30</p></td>
+<td class="text-left"><p>Expected GPA at Graduation (/4.00)</p></td>
+<td class="text-left"><p>1: &lt;2.00, 2: 2.00-2.49, 3: 2.50-2.99, 4: 3.00-3.49, 5: &gt;3.49</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>31</p></td>
+<td class="text-left"><p>Course ID</p></td>
+<td class="text-left"><p>Identifikasi mata kuliah</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="relevansi-untuk-random-forest-decision-tree">
+<h2>Relevansi untuk Random Forest &amp; Decision Tree<a class="headerlink" href="#relevansi-untuk-random-forest-decision-tree" title="Link to this heading">#</a></h2>
+<p>Dataset ini sangat ideal untuk kedua algoritma tersebut karena beberapa alasan:</p>
+<ul class="simple">
+<li><p><strong>Semua fitur bertipe kategorik (integer)</strong> — Decision Tree dapat langsung mempartisi data berdasarkan nilai diskret tanpa perlu normalisasi.</p></li>
+<li><p><strong>Tidak ada missing values</strong> — Tidak perlu preprocessing imputasi, sehingga langsung siap digunakan.</p></li>
+<li><p><strong>Multi-kelas (8 label)</strong> — Random Forest unggul dalam menangani multi-kelas melalui mekanisme voting dari banyak pohon yang mengurangi bias dan varians.</p></li>
+<li><p><strong>Fitur campuran (personal, keluarga, akademik)</strong> — Feature importance dari Random Forest dapat mengidentifikasi faktor mana yang paling berpengaruh terhadap nilai akhir.</p></li>
+<li><p><strong>Jumlah data kecil (145 instansi)</strong> — Decision Tree tunggal berpotensi overfitting; Random Forest dengan ensemble lebih robust untuk ukuran data kecil ini.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="potensi-analisis">
+<h2>Potensi Analisis<a class="headerlink" href="#potensi-analisis" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Analisis</p></th>
+<th class="head text-left"><p>Keterangan</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>Feature Importance</strong></p></td>
+<td class="text-left"><p>RF dapat meranking fitur seperti IPK, jam belajar, dan kehadiran kelas sebagai prediktor terkuat</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Decision Tree Visualization</strong></p></td>
+<td class="text-left"><p>Pohon keputusan dapat divisualisasikan untuk interpretasi aturan klasifikasi secara transparan</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Perbandingan Akurasi</strong></p></td>
+<td class="text-left"><p>RF umumnya lebih akurat dari DT tunggal pada data kecil karena mekanisme bagging</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Cross-Validation</strong></p></td>
+<td class="text-left"><p>Dengan hanya 145 data, k-fold CV penting untuk evaluasi model yang andal</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Hyperparameter Tuning</strong></p></td>
+<td class="text-left"><p>Optimasi <code class="docutils literal notranslate"><span class="pre">max_depth</span></code>, <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code>, dan <code class="docutils literal notranslate"><span class="pre">min_samples_split</span></code> untuk performa terbaik</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="import-dataset-python">
+<h2>Import Dataset (Python)<a class="headerlink" href="#import-dataset-python" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install library</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">ucimlrepo</span>
+
+<span class="c1"># Import dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ucimlrepo</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_ucirepo</span>
+
+<span class="n">higher_education_students_performance_evaluation</span> <span class="o">=</span> <span class="n">fetch_ucirepo</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">856</span><span class="p">)</span>
+
+<span class="c1"># Data sebagai pandas dataframes</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">higher_education_students_performance_evaluation</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">features</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">higher_education_students_performance_evaluation</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">targets</span>
+
+<span class="c1"># Metadata</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">higher_education_students_performance_evaluation</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">higher_education_students_performance_evaluation</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="analisis-menggunakan-python-jupyter-notebook">
+<h1>Analisis Menggunakan Python (Jupyter Notebook)<a class="headerlink" href="#analisis-menggunakan-python-jupyter-notebook" title="Link to this heading">#</a></h1>
+<section id="id1">
+<h2><a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+</section>
+<hr class="docutils" />
+<section id="fokus-analisis">
+<h2>Fokus Analisis<a class="headerlink" href="#fokus-analisis" title="Link to this heading">#</a></h2>
+<p>Dalam notebook ini, dilakukan analisis perbandingan antara metode <strong>Decision Tree</strong> dan <strong>Random Forest</strong> guna memprediksi kategori performa mahasiswa. Variabel target pada dataset adalah <code class="docutils literal notranslate"><span class="pre">OUTPUT</span> <span class="pre">Grade</span></code> dengan rentang nilai 0 hingga 7. Agar klasifikasi lebih stabil dan mudah diinterpretasikan, target tersebut disederhanakan menjadi tiga kategori:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Grade Asli</p></th>
+<th class="head text-left"><p>Kategori Performa</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>0, 1, 2</p></td>
+<td class="text-left"><p>Rendah</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>3, 4, 5</p></td>
+<td class="text-left"><p>Sedang</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>6, 7</p></td>
+<td class="text-left"><p>Tinggi</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Tujuan utama analisis ini adalah menentukan model yang menghasilkan prediksi paling akurat sekaligus mengidentifikasi fitur yang paling berpengaruh terhadap kategori performa mahasiswa.</p>
+</section>
+<hr class="docutils" />
+<section id="pendahuluan">
+<h2>1. Pendahuluan<a class="headerlink" href="#pendahuluan" title="Link to this heading">#</a></h2>
+<p>Penambangan data (<em>data mining</em>) merupakan proses menemukan pola bermakna dari kumpulan data berukuran besar. Pada analisis ini digunakan dataset <strong>Higher Education Students Performance Evaluation</strong> dari UCI Machine Learning Repository — sebuah dataset yang memuat informasi mahasiswa mencakup faktor personal, latar belakang keluarga, dan kebiasaan akademik.</p>
+<p>Permasalahan yang dikaji adalah bagaimana memprediksi kategori performa mahasiswa berdasarkan atribut-atribut yang tersedia. Karena target yang diprediksi berbentuk kategori diskrit, maka pendekatan yang digunakan adalah <strong>klasifikasi</strong>.</p>
+<p>Dua algoritma yang dibandingkan:</p>
+<ol class="arabic simple">
+<li><p><strong>Decision Tree</strong> — model klasifikasi berbasis aturan keputusan yang bersifat transparan dan mudah divisualisasikan.</p></li>
+<li><p><strong>Random Forest</strong> — model ensemble yang membangun ratusan pohon keputusan secara paralel untuk meningkatkan stabilitas dan akurasi prediksi.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="instalasi-dan-import-library">
+<h2>2. Instalasi dan Import Library<a class="headerlink" href="#instalasi-dan-import-library" title="Link to this heading">#</a></h2>
+<p>Langkah pertama adalah menginstal dependensi yang diperlukan. Jika dijalankan di Google Colab, library <code class="docutils literal notranslate"><span class="pre">ucimlrepo</span></code> akan digunakan untuk mengambil dataset langsung dari UCI Machine Learning Repository.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">ucimlrepo</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">ucimlrepo</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_ucirepo</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionTreeClassifier</span><span class="p">,</span> <span class="n">plot_tree</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">classification_report</span><span class="p">,</span>
+    <span class="n">accuracy_score</span><span class="p">,</span>
+    <span class="n">confusion_matrix</span><span class="p">,</span>
+    <span class="n">ConfusionMatrixDisplay</span><span class="p">,</span>
+    <span class="n">precision_score</span><span class="p">,</span>
+    <span class="n">recall_score</span><span class="p">,</span>
+    <span class="n">f1_score</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="load-dataset">
+<h2>3. Load Dataset<a class="headerlink" href="#load-dataset" title="Link to this heading">#</a></h2>
+<p>Dataset diambil langsung dari UCI ML Repository menggunakan <code class="docutils literal notranslate"><span class="pre">fetch_ucirepo</span></code>, atau dari file lokal jika sudah tersedia.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Coba ambil dari UCI ML Repository</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">higher_education</span> <span class="o">=</span> <span class="n">fetch_ucirepo</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">856</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">higher_education</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">higher_education</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mengambil data dari file lokal...&quot;</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;DATA (1).csv&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gagal mengambil data dari UCI: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;DATA (1).csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="eksplorasi-data">
+<h2>4. Eksplorasi Data<a class="headerlink" href="#eksplorasi-data" title="Link to this heading">#</a></h2>
+<p>Sebelum pemodelan, dilakukan eksplorasi awal untuk memahami struktur dan kualitas data:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Informasi umum dataset</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Informasi dataset:&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Hasil eksplorasi awal:</strong></p>
+<ul class="simple">
+<li><p>Jumlah data: <strong>145 baris</strong></p></li>
+<li><p>Jumlah fitur: <strong>31 kolom</strong></p></li>
+<li><p>Distribusi target awal (<code class="docutils literal notranslate"><span class="pre">OUTPUT</span> <span class="pre">Grade</span></code>): 8 kelas (0–7)</p></li>
+<li><p><strong>Tidak ada missing values</strong> pada seluruh kolom</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="distribusi-output-grade">
+<h2>5. Distribusi OUTPUT Grade<a class="headerlink" href="#distribusi-output-grade" title="Link to this heading">#</a></h2>
+<p>Distribusi kelas pada target asli menunjukkan ketidakseimbangan (<em>class imbalance</em>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Distribusi</span> <span class="n">OUTPUT</span> <span class="n">Grade</span> <span class="n">asli</span><span class="p">:</span>
+<span class="mi">0</span>     <span class="mi">8</span>
+<span class="mi">1</span>    <span class="mi">35</span>
+<span class="mi">2</span>    <span class="mi">24</span>
+<span class="mi">3</span>    <span class="mi">21</span>
+<span class="mi">4</span>    <span class="mi">10</span>
+<span class="mi">5</span>    <span class="mi">17</span>
+<span class="mi">6</span>    <span class="mi">13</span>
+<span class="mi">7</span>    <span class="mi">17</span>
+</pre></div>
+</div>
+<p>Kelas 1 (grade DD) mendominasi dengan 35 data, sementara kelas 0 (Fail) hanya berjumlah 8. Kondisi ini menjadi salah satu alasan penyederhanaan target menjadi 3 kategori.</p>
+</section>
+<hr class="docutils" />
+<section id="membuat-target-baru-kategori-performa">
+<h2>6. Membuat Target Baru: Kategori Performa<a class="headerlink" href="#membuat-target-baru-kategori-performa" title="Link to this heading">#</a></h2>
+<p>Karena jumlah data hanya 145 baris, klasifikasi 8 kelas berpotensi menghasilkan model yang tidak stabil akibat jumlah sampel per kelas yang sangat sedikit. Oleh karena itu, target disederhanakan menjadi 3 kategori:</p>
+<ul class="simple">
+<li><p><strong>Rendah</strong>: grade 0, 1, dan 2</p></li>
+<li><p><strong>Sedang</strong>: grade 3, 4, dan 5</p></li>
+<li><p><strong>Tinggi</strong>: grade 6 dan 7</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">kategorisasi_grade</span><span class="p">(</span><span class="n">grade</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">grade</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="s1">&#39;Rendah&#39;</span>
+    <span class="k">elif</span> <span class="n">grade</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="s1">&#39;Sedang&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;Tinggi&#39;</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Kategori_Performa&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;OUTPUT Grade&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">kategorisasi_grade</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Distribusi setelah kategorisasi:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Kategori</p></th>
+<th class="head text-left"><p>Jumlah</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Rendah</p></td>
+<td class="text-left"><p>67</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Sedang</p></td>
+<td class="text-left"><p>48</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Tinggi</p></td>
+<td class="text-left"><p>30</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="preprocessing-data">
+<h2>7. Preprocessing Data<a class="headerlink" href="#preprocessing-data" title="Link to this heading">#</a></h2>
+<p>Tahap preprocessing mencakup lima langkah utama:</p>
+<ol class="arabic simple">
+<li><p>Menghapus kolom identitas mahasiswa (tidak relevan untuk pemodelan).</p></li>
+<li><p>Menghapus target asli <code class="docutils literal notranslate"><span class="pre">OUTPUT</span> <span class="pre">Grade</span></code> dari fitur.</p></li>
+<li><p>Menggunakan <code class="docutils literal notranslate"><span class="pre">Kategori_Performa</span></code> sebagai target klasifikasi.</p></li>
+<li><p>Memastikan seluruh fitur berbentuk numerik.</p></li>
+<li><p>Mengisi nilai kosong (jika ada setelah konversi) dengan median.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Identifikasi kolom ID mahasiswa</span>
+<span class="n">id_cols</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+    <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;student&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+    <span class="ow">or</span> <span class="p">(</span><span class="n">col</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;studentid&#39;</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="n">target_col</span> <span class="o">=</span> <span class="s1">&#39;OUTPUT Grade&#39;</span>
+<span class="n">drop_cols</span> <span class="o">=</span> <span class="n">id_cols</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_col</span><span class="p">,</span> <span class="s1">&#39;Kategori_Performa&#39;</span><span class="p">]</span>
+
+<span class="n">data_model</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Kategori_Performa&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">X_model</span> <span class="o">=</span> <span class="n">data_model</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">drop_cols</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="n">y_model</span> <span class="o">=</span> <span class="n">data_model</span><span class="p">[</span><span class="s1">&#39;Kategori_Performa&#39;</span><span class="p">]</span>
+
+<span class="c1"># Pastikan semua fitur numerik</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">X_model</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="n">X_model</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">X_model</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;coerce&#39;</span><span class="p">)</span>
+
+<span class="c1"># Isi nilai kosong dengan median</span>
+<span class="n">X_model</span> <span class="o">=</span> <span class="n">X_model</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">X_model</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ukuran fitur:&quot;</span><span class="p">,</span> <span class="n">X_model</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ukuran target:&quot;</span><span class="p">,</span> <span class="n">y_model</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Output:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Kolom</span> <span class="n">ID</span> <span class="n">yang</span> <span class="n">akan</span> <span class="n">dihapus</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;STUDENT ID&#39;</span><span class="p">]</span>
+<span class="n">Ukuran</span> <span class="n">fitur</span><span class="p">:</span> <span class="p">(</span><span class="mi">145</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
+<span class="n">Ukuran</span> <span class="n">target</span><span class="p">:</span> <span class="p">(</span><span class="mi">145</span><span class="p">,)</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="split-data-training-dan-testing">
+<h2>8. Split Data Training dan Testing<a class="headerlink" href="#split-data-training-dan-testing" title="Link to this heading">#</a></h2>
+<p>Data dibagi menjadi <strong>80% data training</strong> dan <strong>20% data testing</strong>. Parameter <code class="docutils literal notranslate"><span class="pre">stratify</span></code> digunakan agar proporsi kategori target pada kedua set tetap seimbang.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_model</span><span class="p">,</span>
+    <span class="n">y_model</span><span class="p">,</span>
+    <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+    <span class="n">stratify</span><span class="o">=</span><span class="n">y_model</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah data training:&quot;</span><span class="p">,</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah data testing:&quot;</span><span class="p">,</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p><strong>Output:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Jumlah</span> <span class="n">data</span> <span class="n">training</span><span class="p">:</span> <span class="mi">116</span>
+<span class="n">Jumlah</span> <span class="n">data</span> <span class="n">testing</span><span class="p">:</span> <span class="mi">29</span>
+<span class="n">Distribusi</span> <span class="n">target</span> <span class="n">pada</span> <span class="n">data</span> <span class="n">training</span><span class="p">:</span>
+  <span class="n">Rendah</span><span class="p">:</span> <span class="mi">54</span>
+  <span class="n">Sedang</span><span class="p">:</span> <span class="mi">38</span>
+  <span class="n">Tinggi</span><span class="p">:</span> <span class="mi">24</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="pemodelan-decision-tree">
+<h2>9. Pemodelan Decision Tree<a class="headerlink" href="#pemodelan-decision-tree" title="Link to this heading">#</a></h2>
+<p>Model Decision Tree dibangun menggunakan kriteria <strong>entropy</strong> (Information Gain) dengan kedalaman maksimum 4 untuk menghindari overfitting.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_dt</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span>
+    <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;entropy&#39;</span><span class="p">,</span>
+    <span class="n">max_depth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+<span class="n">model_dt</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Prediksi pada data testing</span>
+<span class="n">pred_dt</span> <span class="o">=</span> <span class="n">model_dt</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model Decision Tree berhasil dilatih.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pred_dt</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><strong>Hasil Evaluasi Decision Tree:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Kategori</p></th>
+<th class="head text-left"><p>Precision</p></th>
+<th class="head text-left"><p>Recall</p></th>
+<th class="head text-left"><p>F1-Score</p></th>
+<th class="head text-left"><p>Support</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Rendah</p></td>
+<td class="text-left"><p>1.000</p></td>
+<td class="text-left"><p>0.538</p></td>
+<td class="text-left"><p>0.700</p></td>
+<td class="text-left"><p>13</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Sedang</p></td>
+<td class="text-left"><p>0.700</p></td>
+<td class="text-left"><p>0.700</p></td>
+<td class="text-left"><p>0.700</p></td>
+<td class="text-left"><p>10</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Tinggi</p></td>
+<td class="text-left"><p>0.500</p></td>
+<td class="text-left"><p>0.667</p></td>
+<td class="text-left"><p>0.571</p></td>
+<td class="text-left"><p>6</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Accuracy</strong></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>0.621</strong></p></td>
+<td class="text-left"><p><strong>29</strong></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Weighted Avg</p></td>
+<td class="text-left"><p>0.675</p></td>
+<td class="text-left"><p>0.621</p></td>
+<td class="text-left"><p>0.621</p></td>
+<td class="text-left"><p>29</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="pemodelan-random-forest">
+<h2>10. Pemodelan Random Forest<a class="headerlink" href="#pemodelan-random-forest" title="Link to this heading">#</a></h2>
+<p>Model Random Forest dibangun dengan <strong>200 pohon keputusan</strong> dan mengaktifkan <code class="docutils literal notranslate"><span class="pre">class_weight='balanced'</span></code> untuk menangani ketidakseimbangan kelas.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+    <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;entropy&#39;</span><span class="p">,</span>
+    <span class="n">max_depth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">class_weight</span><span class="o">=</span><span class="s1">&#39;balanced&#39;</span>
+<span class="p">)</span>
+<span class="n">model_rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Prediksi pada data testing</span>
+<span class="n">pred_rf</span> <span class="o">=</span> <span class="n">model_rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model Random Forest berhasil dilatih.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pred_rf</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><strong>Hasil Evaluasi Random Forest:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Kategori</p></th>
+<th class="head text-left"><p>Precision</p></th>
+<th class="head text-left"><p>Recall</p></th>
+<th class="head text-left"><p>F1-Score</p></th>
+<th class="head text-left"><p>Support</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Rendah</p></td>
+<td class="text-left"><p>1.000</p></td>
+<td class="text-left"><p>1.000</p></td>
+<td class="text-left"><p>1.000</p></td>
+<td class="text-left"><p>13</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Sedang</p></td>
+<td class="text-left"><p>0.500</p></td>
+<td class="text-left"><p>0.500</p></td>
+<td class="text-left"><p>0.500</p></td>
+<td class="text-left"><p>10</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Tinggi</p></td>
+<td class="text-left"><p>0.833</p></td>
+<td class="text-left"><p>0.833</p></td>
+<td class="text-left"><p>0.833</p></td>
+<td class="text-left"><p>6</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Accuracy</strong></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>0.759</strong></p></td>
+<td class="text-left"><p><strong>29</strong></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Weighted Avg</p></td>
+<td class="text-left"><p>0.771</p></td>
+<td class="text-left"><p>0.759</p></td>
+<td class="text-left"><p>0.759</p></td>
+<td class="text-left"><p>29</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="evaluasi-model">
+<h2>11. Evaluasi Model<a class="headerlink" href="#evaluasi-model" title="Link to this heading">#</a></h2>
+<p>Ringkasan metrik evaluasi kedua model:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">evaluasi_model</span><span class="p">(</span><span class="n">nama</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;Model&#39;</span><span class="p">:</span> <span class="n">nama</span><span class="p">,</span>
+        <span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">),</span>
+        <span class="s1">&#39;Precision&#39;</span><span class="p">:</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+        <span class="s1">&#39;Recall&#39;</span><span class="p">:</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+        <span class="s1">&#39;F1-Score&#39;</span><span class="p">:</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="p">}</span>
+
+<span class="n">hasil_evaluasi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+    <span class="n">evaluasi_model</span><span class="p">(</span><span class="s1">&#39;Decision Tree&#39;</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">pred_dt</span><span class="p">),</span>
+    <span class="n">evaluasi_model</span><span class="p">(</span><span class="s1">&#39;Random Forest&#39;</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">pred_rf</span><span class="p">)</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="confusion-matrix">
+<h2>12. Confusion Matrix<a class="headerlink" href="#confusion-matrix" title="Link to this heading">#</a></h2>
+<section id="confusion-matrix-decision-tree">
+<h3>Confusion Matrix — Decision Tree<a class="headerlink" href="#confusion-matrix-decision-tree" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>             <span class="n">Rendah</span>  <span class="n">Sedang</span>  <span class="n">Tinggi</span>
+<span class="n">Rendah</span>          <span class="mi">7</span>       <span class="mi">6</span>       <span class="mi">0</span>
+<span class="n">Sedang</span>          <span class="mi">2</span>       <span class="mi">7</span>       <span class="mi">1</span>
+<span class="n">Tinggi</span>          <span class="mi">0</span>       <span class="mi">2</span>       <span class="mi">4</span>
+</pre></div>
+</div>
+</section>
+<section id="confusion-matrix-random-forest">
+<h3>Confusion Matrix — Random Forest<a class="headerlink" href="#confusion-matrix-random-forest" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>             <span class="n">Rendah</span>  <span class="n">Sedang</span>  <span class="n">Tinggi</span>
+<span class="n">Rendah</span>         <span class="mi">12</span>       <span class="mi">1</span>       <span class="mi">0</span>
+<span class="n">Sedang</span>          <span class="mi">3</span>       <span class="mi">5</span>       <span class="mi">2</span>
+<span class="n">Tinggi</span>          <span class="mi">1</span>       <span class="mi">0</span>       <span class="mi">5</span>
+</pre></div>
+</div>
+<p>Random Forest secara konsisten lebih baik dalam mengklasifikasikan kelas <strong>Rendah</strong> (12/13 benar) dan <strong>Tinggi</strong> (5/6 benar) dibandingkan Decision Tree tunggal.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="visualisasi-decision-tree">
+<h2>13. Visualisasi Decision Tree<a class="headerlink" href="#visualisasi-decision-tree" title="Link to this heading">#</a></h2>
+<p>Pohon keputusan divisualisasikan untuk memperlihatkan struktur aturan yang digunakan model dalam melakukan klasifikasi. Simpul akar (root node) menggunakan <code class="docutils literal notranslate"><span class="pre">COURSE</span> <span class="pre">ID</span></code> sebagai fitur pemisah pertama.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">plot_tree</span><span class="p">(</span>
+    <span class="n">model_dt</span><span class="p">,</span>
+    <span class="n">feature_names</span><span class="o">=</span><span class="n">X_model</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span>
+    <span class="n">class_names</span><span class="o">=</span><span class="n">model_dt</span><span class="o">.</span><span class="n">classes_</span><span class="p">,</span>
+    <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">rounded</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">fontsize</span><span class="o">=</span><span class="mi">7</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Visualisasi Model Decision Tree&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="feature-importance-pada-random-forest">
+<h2>14. Feature Importance pada Random Forest<a class="headerlink" href="#feature-importance-pada-random-forest" title="Link to this heading">#</a></h2>
+<p>Feature importance digunakan untuk mengidentifikasi atribut yang paling berpengaruh dalam proses prediksi kategori performa mahasiswa.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">feature_importance</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Fitur&#39;</span><span class="p">:</span> <span class="n">X_model</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span>
+    <span class="s1">&#39;Importance&#39;</span><span class="p">:</span> <span class="n">model_rf</span><span class="o">.</span><span class="n">feature_importances_</span>
+<span class="p">})</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Importance&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">feature_importance</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>10 Fitur Paling Berpengaruh:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Rank</p></th>
+<th class="head text-left"><p>Fitur</p></th>
+<th class="head text-left"><p>Importance</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>1</p></td>
+<td class="text-left"><p>COURSE ID</p></td>
+<td class="text-left"><p>0.189788</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>2</p></td>
+<td class="text-left"><p>29</p></td>
+<td class="text-left"><p>0.072192</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>3</p></td>
+<td class="text-left"><p>11</p></td>
+<td class="text-left"><p>0.044421</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>4</p></td>
+<td class="text-left"><p>16</p></td>
+<td class="text-left"><p>0.041363</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>5</p></td>
+<td class="text-left"><p>2</p></td>
+<td class="text-left"><p>0.041027</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>6</p></td>
+<td class="text-left"><p>4</p></td>
+<td class="text-left"><p>0.040636</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>7</p></td>
+<td class="text-left"><p>13</p></td>
+<td class="text-left"><p>0.040290</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>8</p></td>
+<td class="text-left"><p>12</p></td>
+<td class="text-left"><p>0.036497</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>9</p></td>
+<td class="text-left"><p>30</p></td>
+<td class="text-left"><p>0.036012</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>10</p></td>
+<td class="text-left"><p>17</p></td>
+<td class="text-left"><p>0.028628</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p><strong>Catatan:</strong> <code class="docutils literal notranslate"><span class="pre">COURSE</span> <span class="pre">ID</span></code> mendominasi feature importance dengan nilai 0.189, jauh di atas fitur lainnya. Fitur 29 (Expected GPA at Graduation) dan 11 (Mother’s Education) juga memiliki pengaruh signifikan.</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="perbandingan-hasil-model">
+<h2>15. Perbandingan Hasil Model<a class="headerlink" href="#perbandingan-hasil-model" title="Link to this heading">#</a></h2>
+<p>Perbandingan performa kedua model pada data testing:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Metrik Evaluasi</p></th>
+<th class="head text-left"><p>Decision Tree</p></th>
+<th class="head text-left"><p>Random Forest</p></th>
+<th class="head text-left"><p>Selisih Peningkatan</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>Accuracy</strong></p></td>
+<td class="text-left"><p>62.07%</p></td>
+<td class="text-left"><p><strong>75.86%</strong></p></td>
+<td class="text-left"><p>+13.79%</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Precision (Weighted)</strong></p></td>
+<td class="text-left"><p>67.51%</p></td>
+<td class="text-left"><p><strong>77.13%</strong></p></td>
+<td class="text-left"><p>+9.62%</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Recall (Weighted)</strong></p></td>
+<td class="text-left"><p>62.07%</p></td>
+<td class="text-left"><p><strong>75.86%</strong></p></td>
+<td class="text-left"><p>+13.79%</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>F1-Score (Weighted)</strong></p></td>
+<td class="text-left"><p>62.88%</p></td>
+<td class="text-left"><p><strong>74.57%</strong></p></td>
+<td class="text-left"><p>+11.69%</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="mengapa-random-forest-lebih-unggul">
+<h3>Mengapa Random Forest Lebih Unggul?<a class="headerlink" href="#mengapa-random-forest-lebih-unggul" title="Link to this heading">#</a></h3>
+<p><strong>1. Efek Ensemble (Voting/Bagging)</strong>
+Decision Tree tunggal cenderung <em>overfitting</em> karena keputusan diambil dari satu jalur pohon. Random Forest melatih <strong>200 pohon keputusan independen</strong> secara acak (<em>bagging</em>) dan mengambil keputusan akhir berdasarkan suara terbanyak (<em>majority voting</em>), sehingga varians model berkurang drastis.</p>
+<p><strong>2. Penanganan Imbalanced Class</strong>
+Distribusi target cukup tidak seimbang (Rendah: 67, Sedang: 48, Tinggi: 30). Parameter <code class="docutils literal notranslate"><span class="pre">class_weight='balanced'</span></code> pada Random Forest secara otomatis memberikan bobot lebih besar kepada kelas minoritas (Tinggi dan Sedang), sehingga model mampu mengenali kelas <strong>Tinggi</strong> dengan Recall <strong>83.3%</strong> — jauh melampaui Decision Tree yang hanya <strong>50.0%</strong>.</p>
+<p><strong>3. Stabilitas Prediksi</strong>
+Melalui pengacakan pemilihan fitur (<em>feature sampling</em>) di setiap percabangan pohon, Random Forest mampu menangkap pola tersembunyi yang mungkin terlewat jika hanya mengandalkan algoritma pembagian tunggal berbasis <em>information gain/entropy</em> seperti pada Decision Tree.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="menyimpan-hasil-evaluasi-dan-prediksi">
+<h2>16. Menyimpan Hasil Evaluasi dan Prediksi<a class="headerlink" href="#menyimpan-hasil-evaluasi-dan-prediksi" title="Link to this heading">#</a></h2>
+<p>Hasil evaluasi dan prediksi disimpan ke dalam file CSV untuk keperluan dokumentasi dan lampiran laporan.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Menyimpan hasil evaluasi</span>
+<span class="n">hasil_evaluasi</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;hasil_evaluasi_decision_tree_random_forest.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Menyimpan hasil prediksi data testing</span>
+<span class="n">hasil_prediksi</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">hasil_prediksi</span><span class="p">[</span><span class="s1">&#39;Aktual&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_test</span><span class="o">.</span><span class="n">values</span>
+<span class="n">hasil_prediksi</span><span class="p">[</span><span class="s1">&#39;Prediksi_Decision_Tree&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pred_dt</span>
+<span class="n">hasil_prediksi</span><span class="p">[</span><span class="s1">&#39;Prediksi_Random_Forest&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pred_rf</span>
+<span class="n">hasil_prediksi</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;hasil_prediksi_decision_tree_random_forest.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File berhasil disimpan:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1. hasil_evaluasi_decision_tree_random_forest.csv&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2. hasil_prediksi_decision_tree_random_forest.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="kesimpulan">
+<h2>18. Kesimpulan<a class="headerlink" href="#kesimpulan" title="Link to this heading">#</a></h2>
+<p>Berdasarkan analisis yang telah dilakukan, perbandingan dua metode klasifikasi — <strong>Decision Tree</strong> dan <strong>Random Forest</strong> — untuk memprediksi kategori performa mahasiswa (<strong>Rendah</strong>, <strong>Sedang</strong>, <strong>Tinggi</strong>) menghasilkan temuan berikut:</p>
+<p><strong>Decision Tree</strong> menawarkan keunggulan interpretabilitas tinggi karena menghasilkan aturan keputusan yang dapat divisualisasikan secara langsung. Namun, model ini lebih rentan terhadap <em>overfitting</em> pada data berukuran kecil seperti dataset ini (145 instansi).</p>
+<p><strong>Random Forest</strong> terbukti lebih unggul secara metrik dengan akurasi <strong>75.86%</strong> (vs 62.07%) dan F1-Score weighted <strong>74.57%</strong> (vs 62.88%). Keunggulan ini diperoleh melalui mekanisme ensemble yang mengurangi varians dan kemampuannya menangani ketidakseimbangan kelas secara lebih efektif.</p>
+<p>Dari analisis <strong>feature importance</strong>, <code class="docutils literal notranslate"><span class="pre">COURSE</span> <span class="pre">ID</span></code> menjadi fitur paling dominan, diikuti oleh Expected GPA (fitur 29) dan pendidikan ibu (fitur 11). Temuan ini menunjukkan bahwa faktor akademik dan latar belakang keluarga memiliki peran signifikan dalam menentukan capaian performa mahasiswa.</p>
+<p>Dengan demikian, analisis ini tidak hanya membandingkan performa model secara kuantitatif, tetapi juga memberikan wawasan tentang faktor-faktor yang perlu diperhatikan dalam upaya meningkatkan capaian akademik mahasiswa.</p>
+</section>
+<hr class="docutils" />
+<section id="analisis-tambahan-menggunakan-orange-data-mining">
+<h2>Analisis Tambahan Menggunakan Orange Data Mining<a class="headerlink" href="#analisis-tambahan-menggunakan-orange-data-mining" title="Link to this heading">#</a></h2>
+<p>Selain analisis berbasis Python, evaluasi performa model klasifikasi juga dilakukan menggunakan aplikasi visual <strong>Orange Data Mining</strong>.</p>
+<p>Alur kerja (<em>workflow</em>) yang digunakan dalam Orange mencakup:</p>
+<ol class="arabic simple">
+<li><p><strong>File / Data</strong> — Memuat dataset evaluasi performa mahasiswa.</p></li>
+<li><p><strong>Formula / Select Columns</strong> — Menentukan target variabel (<code class="docutils literal notranslate"><span class="pre">GRADE</span></code>) dan fitur lainnya.</p></li>
+<li><p><strong>Test and Score</strong> — Arena evaluasi utama untuk membandingkan kedua model secara berdampingan.</p></li>
+<li><p><strong>Tree &amp; Random Forest</strong> — Dua algoritma yang dikompetisikan. Decision Tree terbukti memiliki performa yang sedikit lebih unggul dan stabil dalam mengenali kelas mahasiswa ‘Rendah’ dan ‘Sedang’, sedangkan Random Forest unggul di kelas ‘Tinggi’.</p></li>
+<li><p><strong>Confusion Matrix, ROC Analysis, dan Tree Viewer</strong> — Digunakan untuk menganalisis detail prediksi dan menginterpretasikan aturan dari pohon keputusan.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="laporan-ini-merupakan-bagian-dari-tugas-akhir-mata-kuliah-penambangan-data-program-studi-teknik-informatika-tools-google-colab-python">
+<h2><em>Laporan ini merupakan bagian dari tugas akhir mata kuliah Penambangan Data, Program Studi Teknik Informatika.</em>
+<em>Tools: Google Colab (Python).</em><a class="headerlink" href="#laporan-ini-merupakan-bagian-dari-tugas-akhir-mata-kuliah-penambangan-data-program-studi-teknik-informatika-tools-google-colab-python" title="Link to this heading">#</a></h2>
+</section>
+<section id="referensi">
+<h2>Referensi<a class="headerlink" href="#referensi" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>Yilmaz, N. &amp; Şekeroğlu, B. (2019). <em>Higher Education Students Performance Evaluation</em> [Dataset]. UCI Machine Learning Repository.
+DOI: <a class="reference external" href="https://doi.org/10.24432/C51G82">10.24432/C51G82</a></p>
+</div></blockquote>
+<p>Paper pendamping: <em>“Student Performance Classification Using Artificial Intelligence Techniques”</em>, dipublikasikan dalam <strong>Advances in Intelligent Systems and Computing</strong>, vol. 1095.</p>
+<hr class="docutils" />
+<p><em>Lisensi: <a class="reference external" href="https://creativecommons.org/licenses/by/4.0/legalcode">Creative Commons Attribution 4.0 International (CC BY 4.0)</a></em></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="ExplaiabilitySKforecast.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Model Explainability dengan Skforecast</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">UAS | Analisis Perbandingan Decision Tree dan Random Forest</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#identitas-saya">Identitas Saya</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variabel-target-output">Variabel Target (Output)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kelompok-fitur-31-variabel">Kelompok Fitur (31 Variabel)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitur-personal-variabel-110">1. Fitur Personal (Variabel 1–10)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitur-keluarga-variabel-1116">2. Fitur Keluarga (Variabel 11–16)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitur-kebiasaan-belajar-variabel-1731">3. Fitur Kebiasaan Belajar (Variabel 17–31)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relevansi-untuk-random-forest-decision-tree">Relevansi untuk Random Forest &amp; Decision Tree</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#potensi-analisis">Potensi Analisis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-dataset-python">Import Dataset (Python)</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-menggunakan-python-jupyter-notebook">Analisis Menggunakan Python (Jupyter Notebook)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fokus-analisis">Fokus Analisis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pendahuluan">1. Pendahuluan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalasi-dan-import-library">2. Instalasi dan Import Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-dataset">3. Load Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data">4. Eksplorasi Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-output-grade">5. Distribusi OUTPUT Grade</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-target-baru-kategori-performa">6. Membuat Target Baru: Kategori Performa</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-data">7. Preprocessing Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#split-data-training-dan-testing">8. Split Data Training dan Testing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemodelan-decision-tree">9. Pemodelan Decision Tree</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemodelan-random-forest">10. Pemodelan Random Forest</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-model">11. Evaluasi Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix">12. Confusion Matrix</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix-decision-tree">Confusion Matrix — Decision Tree</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix-random-forest">Confusion Matrix — Random Forest</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-decision-tree">13. Visualisasi Decision Tree</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-importance-pada-random-forest">14. Feature Importance pada Random Forest</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-hasil-model">15. Perbandingan Hasil Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mengapa-random-forest-lebih-unggul">Mengapa Random Forest Lebih Unggul?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menyimpan-hasil-evaluasi-dan-prediksi">16. Menyimpan Hasil Evaluasi dan Prediksi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">18. Kesimpulan</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-tambahan-menggunakan-orange-data-mining">Analisis Tambahan Menggunakan Orange Data Mining</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#laporan-ini-merupakan-bagian-dari-tugas-akhir-mata-kuliah-penambangan-data-program-studi-teknik-informatika-tools-google-colab-python"><em>Laporan ini merupakan bagian dari tugas akhir mata kuliah Penambangan Data, Program Studi Teknik Informatika.</em>
+<em>Tools: Google Colab (Python).</em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referensi">Referensi</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By MOHAMMAD SULTON MUQSITH ASSIDIQI
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
