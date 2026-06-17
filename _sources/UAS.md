@@ -12,7 +12,7 @@
 | Mata Kuliah | Penambangan Data / Data Mining |
 | Kelas | Penambangan Data B |
 | Dosen Pengampu | Bapak Mula'ab, S.Si., M.Kom. |
-| Tools Utama | IPYNB / Google Colab dan Orange |
+| Tools Utama | IPYNB / Google Colab |
 | Metode | Decision Tree dan Random Forest |
 | Dataset | Higher Education Students Performance Evaluation |
 | Sumber Dataset | UCI Machine Learning Repository |
